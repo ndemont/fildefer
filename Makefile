@@ -1,0 +1,54 @@
+NAME		= fdf
+CLEAR		= \033[2K\c
+CC			= clang
+RM			= rm -rf
+
+CFLAGS		= -Wall -Wextra -Werror -O3 -Ofast
+IFLAGS		= -I/usr/include -I${MLX_DIR} -I${INC_DIR} -I${LIBFT_DIR}/includes -D LINUX=1
+LFLAGS		= -L ${MLX_DIR} -lmlx -L ${LIBFT_DIR} -lft -L /usr/lib -lXext -lX11 -lm
+
+SRCS_DIR	= srcs
+INC_DIR		= includes
+MLX_DIR 	= liblinux
+LIBFT_DIR	= libft
+OBJS_DIR	= objs
+
+INC         = $(shell find ${INC_DIR} -type f -name "*.h")
+SRCS 		= $(notdir $(shell find ${SRCS_DIR} -type f -name "*.c"))
+OBJS 		= $(addprefix ${OBJS_DIR}/, $(SRCS:.c=.o))
+vpath		%.c $(shell find ${SRCS_DIR} -type d)
+				
+all: 		init ${NAME}
+
+init:
+			$(shell mkdir -p ${OBJS_DIR})
+			${MAKE} --silent -C ${LIBFT_DIR}
+			${MAKE} --silent -C ${MLX_DIR}
+
+${NAME}:	${OBJS}
+			${CC} ${CFLAGS} ${IFLAGS} -o $@ $^ ${LFLAGS}
+
+${OBJS_DIR}/%.o:	%.c
+			@echo "${CLEAR}"
+			@echo "compiling $<\r\c"
+			@${CC} ${IFLAGS} -c $< -o $@
+
+clean:
+			${RM} ${OBJS_DIR}
+			${MAKE} clean --silent -C ${LIBFT_DIR}
+			${MAKE} clean --silent -C ${MLX_DIR}
+
+fclean:
+			${RM} ${OBJS_DIR}
+			${RM} ${NAME}
+			${MAKE} fclean --silent -C ${LIBFT_DIR}
+			${MAKE} clean --silent -C ${MLX_DIR}
+
+re:			fclean all
+
+norme:
+			~/.norminette/norminette.rb ${SRCS_DIR}
+			~/.norminette/norminette.rb ${INC_DIR}
+
+.SUFFIXES:	.c .o .h
+.PHONY:		all clean fclean re
