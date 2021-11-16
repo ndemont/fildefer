@@ -2,22 +2,29 @@ NAME		= fdf
 CLEAR		= \033[2K\c
 CC			= clang
 RM			= rm -rf
+OS			= $(shell uname)
 
 CFLAGS		= -Wall -Wextra -Werror -O3 -Ofast
-IFLAGS		= -I/usr/include -I${MLX_DIR} -I${INC_DIR} -I${LIBFT_DIR}/includes -D LINUX=1
-LFLAGS		= -L ${MLX_DIR} -lmlx -L ${LIBFT_DIR} -lft -L /usr/lib -lXext -lX11 -lm
+IFLAGS		= -I${INC_DIR} -I${MLX_DIR} -I${LIBFT_DIR}/includes -D LINUX=0
+LFLAGS		= -L ${MLX_DIR} -lmlx -L ${LIBFT_DIR} -lft -framework OpenGL -framework AppKit
 
 SRCS_DIR	= srcs
 INC_DIR		= includes
-MLX_DIR 	= liblinux
+MLX_DIR		= libmac
 LIBFT_DIR	= libft
 OBJS_DIR	= objs
 
-INC         = $(shell find ${INC_DIR} -type f -name "*.h")
+INC			= $(shell find ${INC_DIR} -type f -name "*.h")
 SRCS 		= $(notdir $(shell find ${SRCS_DIR} -type f -name "*.c"))
 OBJS 		= $(addprefix ${OBJS_DIR}/, $(SRCS:.c=.o))
 vpath		%.c $(shell find ${SRCS_DIR} -type d)
-				
+
+ifeq (${OS}, Linux)
+	MLX_DIR = liblinux
+	IFLAGS  = -I/usr/include -I${MLX_DIR} -I${INC_DIR} -I${LIBFT_DIR}/includes -D LINUX=1
+	LFLAGS  = -L ${MLX_DIR} -lmlx -L ${LIBFT_DIR} -lft -L /usr/lib -lXext -lX11 -lm
+endif
+
 all: 		init ${NAME}
 
 init:
