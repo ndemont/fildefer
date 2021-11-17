@@ -34,6 +34,12 @@ t_wireframe	*init_wireframe(void)
 	wireframe->endian = 0;
 	wireframe->bits_per_pixel = 0;
 	wireframe->data_addr = NULL;
+	wireframe->camera.origin.x = 0;
+	wireframe->camera.origin.y = 0;
+	wireframe->camera.origin.z = 0;
+	wireframe->camera.direction.x = 0;
+	wireframe->camera.direction.y = 0;
+	wireframe->camera.direction.z = -1;
 	return wireframe;
 }
 
@@ -119,8 +125,8 @@ t_wireframe	*parsing(char *file)
 		return (free_wireframe(wireframe, 79));
 	if (!check_file(content, wireframe))
 		return (NULL);
-	wireframe->camera.x = wireframe->x_len / 2;
-	wireframe->camera.y = wireframe->y_len * 2;
-	wireframe->camera.z = 0;
+	wireframe->camera.origin.x = 0;
+	wireframe->camera.origin.y = 0;
+	wireframe->camera.origin.z = 30;
 	return (wireframe);
 }
