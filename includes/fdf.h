@@ -17,6 +17,13 @@
 #define HEIGHT 1000
 #define WIDTH 1200
 
+typedef struct		s_img
+{
+	void			*img_ptr;
+	unsigned char	*data_addr;
+}					t_img;
+
+
 typedef struct	s_point
 {
 	float	x;
@@ -51,6 +58,9 @@ t_wireframe	*free_wireframe(t_wireframe *wireframe, int errno);
 void		print_error(int errno);
 
 void	fill_window(t_wireframe *wireframe);
+int		ft_close_win(int keycode, t_scene *s);
+int		ft_event(int keycode, t_wireframe *w);
+int		ft_cross(int keycode, t_scene *s)
 
 //void	init_images(t_wireframe *wireframe);
 //void	*ft_load_imgs(t_wireframe *wireframe);

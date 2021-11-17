@@ -27,8 +27,6 @@ void	fill_window(t_wireframe *wireframe)
 		{
 			point = create_point(wireframe, x, y, wireframe->altitudes[y][x]);
 			pixel = (point.x * point.y) * 4;
-			printf("point = x:%f y:%f z:%f\n", point.x, point.y, point.z);
-			printf("pixel = %d\n", pixel);
 			wireframe->data_addr[pixel + 2] = 155;
 			wireframe->data_addr[pixel + 1] = 155;
 			wireframe->data_addr[pixel + 0] = 155;

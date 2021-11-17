@@ -27,8 +27,6 @@ int main(int ac, char **av)
 	if (!wireframe)
 		return (1);
 	init_window(wireframe);
-	printf("size = %d\n", wireframe->size);
-	printf("bits = %d\n", wireframe->bits_per_pixel);
 	fill_window(wireframe);
 	display_window(wireframe);
 	return (0);
