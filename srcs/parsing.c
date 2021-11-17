@@ -27,6 +27,13 @@ t_wireframe	*init_wireframe(void)
 	wireframe->x_len = 0;
 	wireframe->y_len = 0;
 	wireframe->altitudes = NULL;
+	wireframe->mlx_ptr = mlx_init();
+	wireframe->win_ptr = NULL;
+	wireframe->img_ptr = NULL;
+	wireframe->size = 0;
+	wireframe->endian = 0;
+	wireframe->bits_per_pixel = 0;
+	wireframe->data_addr = NULL;
 	return wireframe;
 }
 
@@ -112,5 +119,8 @@ t_wireframe	*parsing(char *file)
 		return (free_wireframe(wireframe, 79));
 	if (!check_file(content, wireframe))
 		return (NULL);
+	wireframe->camera.x = wireframe->x_len / 2;
+	wireframe->camera.y = wireframe->y_len * 2;
+	wireframe->camera.z = 0;
 	return (wireframe);
 }
