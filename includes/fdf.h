@@ -13,7 +13,7 @@
 #define STDIN_FILENO 0
 #define STDOUT_FILENO 1
 #define STDERR_FILENO 2
-#define FOV (70 * (M_PI / 2))
+#define FOV (70 * (M_PI / 180))
 #define HEIGHT 500
 #define WIDTH 500
 # if LINUX == 1

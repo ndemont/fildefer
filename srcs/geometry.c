@@ -132,17 +132,17 @@ int		near_inter(t_wireframe *w, t_pixel *pixel)
 		i = 0;
 		while (i < w->x_len)
 		{
-			inter.x = i - w->ray.origin.x;
-			inter.y = j - w->ray.origin.y;
-			inter.z = w->altitudes[j][i] - w->ray.origin.z;
-			normalize(&inter);
-			// printf("inter x	= %f - inter y	= %f - inter z	= %f\n", inter.x, inter.y, inter.z);
+			inter.x = i / (w->ray.origin.x * w->ray.direction.x);
+			inter.y = j / (w->ray.origin.y * w->ray.direction.y);
+			inter.z = w->altitudes[j][i] / (w->ray.origin.z * w->ray.direction.z);
+			//normalize(&inter);
+			//printf("inter x	= %f - inter y	= %f - inter z	= %f\n", inter.x, inter.y, inter.z);
 			// printf("ray x	= %f - ray y	= %f - ray z	= %f\n\n", w->ray.direction.x, w->ray.direction.y, w->ray.direction.z);
-			if (inter.x == w->ray.direction.x && inter.y == w->ray.direction.y && inter.z == w->ray.direction.z)
+			if (inter.x == inter.y && inter.y == inter.z)
 			{
-				pixel->r = (char)155;
-				pixel->g = (char)155;
-				pixel->b = (char)155;
+				pixel->r = (char)255;
+				pixel->g = (char)255;
+				pixel->b = (char)255;
 				return (1);
 			}
 			i++;
@@ -159,8 +159,10 @@ void	create_pixel(t_wireframe *wireframe, int x, int y, t_matrix m)
 
 	wireframe->ray.direction.x = (x - (WIDTH / 2));
 	wireframe->ray.direction.y = (y - (HEIGHT / 2));
+	wireframe->ray.direction.z = - (WIDTH / (2 * (tan(FOV / 2))));
 	normalize(&(wireframe->ray.direction));
 	wireframe->ray.direction = get_normalized(v_mult_m(wireframe->ray.direction, m));
+	// printf("Ray Direction\nx = %f - y = %f - z = %f\n", wireframe->ray.direction.x, wireframe->ray.direction.y, wireframe->ray.direction.z);
 	ret = near_inter(wireframe, &pixel);
 	if (ret)
 	{
@@ -181,19 +183,17 @@ void	fill_window(t_wireframe *wireframe)
 	t_pixel	pixel;
 
 	wireframe->ray.origin = wireframe->camera.origin;
-	wireframe->ray.direction.z = -((WIDTH / (2 * (tan(FOV / 2)))));
 	matrix = rotation_matrix(wireframe->camera.direction);
+	// printf("MATRIX\nR1: %f %f %f\n", matrix.r1.x, matrix.r1.y, matrix.r1.x);
+	// printf("R2: %f %f %f\n", matrix.r2.x, matrix.r2.y, matrix.r2.x);
+	// printf("R3: %f %f %f\n", matrix.r3.x, matrix.r3.y, matrix.r3.x);
+	// printf("R4: %f %f %f\n", matrix.r4.x, matrix.r4.y, matrix.r4.x);
 	y = 0;
 	while (y < HEIGHT)
 	{
 		x = 0;
 		while (x < WIDTH)
 		{
-			pixel.p = ((HEIGHT - y - 1) * wireframe->size);
-			pixel.p += ((WIDTH - x - 1) * 4);
-			wireframe->data_addr[pixel.p + 2] = 255;
-			wireframe->data_addr[pixel.p + 1] = 0;
-			wireframe->data_addr[pixel.p + 0] = 0;
 			create_pixel(wireframe, x, y, matrix);
 			x++;
 		}

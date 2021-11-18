@@ -38,8 +38,8 @@ t_wireframe	*init_wireframe(void)
 	wireframe->camera.origin.y = 0;
 	wireframe->camera.origin.z = 0;
 	wireframe->camera.direction.x = 0;
-	wireframe->camera.direction.y = 0;
-	wireframe->camera.direction.z = -1;
+	wireframe->camera.direction.y = -1;
+	wireframe->camera.direction.z = 0;
 	return wireframe;
 }
 
@@ -125,8 +125,8 @@ t_wireframe	*parsing(char *file)
 		return (free_wireframe(wireframe, 79));
 	if (!check_file(content, wireframe))
 		return (NULL);
-	wireframe->camera.origin.x = 0;
-	wireframe->camera.origin.y = 0;
+	wireframe->camera.origin.x = wireframe->x_len / 2;
+	wireframe->camera.origin.y = wireframe->y_len * 2;
 	wireframe->camera.origin.z = 30;
 	return (wireframe);
 }
