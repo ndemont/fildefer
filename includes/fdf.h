@@ -14,8 +14,8 @@
 #define STDOUT_FILENO 1
 #define STDERR_FILENO 2
 #define FOV (70 * (M_PI / 180))
-#define HEIGHT 500
-#define WIDTH 500
+#define HEIGHT 1000
+#define WIDTH 1000
 # if LINUX == 1
 #  define MOVE_R 65363
 #  define MOVE_L 65361
@@ -73,12 +73,13 @@ typedef struct s_ray
 
 typedef struct	s_wire
 {
-	t_point	a;
-	t_point	b;
+	t_point	start;
+	t_point	end;
 }				t_wire;
 
 typedef struct	s_wireframe
 {
+	int				point_nbr;
 	int				z_max;
 	int				z_min;
 	int				x_len;
@@ -94,6 +95,7 @@ typedef struct	s_wireframe
 	unsigned char	*data_addr;
 	t_ray			camera;
 	float			direction;
+	t_pixel			pixel;
 }				t_wireframe;
 
 t_wireframe	*parsing(char *file);

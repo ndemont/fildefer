@@ -28,12 +28,12 @@ int main(int ac, char **av)
 		return (1);
 	init_window(wireframe);
 	fill_window(wireframe);
-	mlx_hook(wireframe->win_ptr, 2, 1L << 0, ft_event, &wireframe);
-	if (!LINUX)
-		mlx_hook(wireframe->win_ptr, 17, 1L << 17, ft_cross, &wireframe);
-	else
-		mlx_hook(wireframe->win_ptr, 33, 1L << 5, ft_cross, &wireframe);
-	mlx_loop_hook(wireframe->mlx_ptr, ft_event, &wireframe);
+	// mlx_hook(wireframe->win_ptr, 2, 1L << 0, ft_event, &wireframe);
+	// if (!LINUX)
+	// 	mlx_hook(wireframe->win_ptr, 17, 1L << 17, ft_cross, &wireframe);
+	// else
+	// 	mlx_hook(wireframe->win_ptr, 33, 1L << 5, ft_cross, &wireframe);
+	// mlx_loop_hook(wireframe->mlx_ptr, ft_event, &wireframe);
 	display_window(wireframe);
 	return (0);
 }

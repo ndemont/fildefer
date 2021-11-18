@@ -88,6 +88,7 @@ int	check_file(char *content, t_wireframe *wireframe)
 	if (!wireframe->altitudes)
 		return (0);
 	wireframe->x_len = count_x_len(content);
+	printf("x len =%d\n", wireframe->x_len);
 	i = 0;
 	while (i < wireframe->y_len)
 	{

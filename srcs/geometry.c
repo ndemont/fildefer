@@ -22,7 +22,15 @@ t_point	v_mult_m(t_point v, t_matrix m)
 	return (new);
 }
 
+t_point	v_minus_v(t_point v1, t_point v2)
+{
+	t_point v3;
 
+	v3.x = v1.x - v2.x;
+	v3.y = v1.y - v2.y;
+	v3.z = v1.z - v2.z;
+	return (v3);
+}
 
 t_point	init_point(float x, float y, float z)
 {
@@ -125,107 +133,155 @@ int		color_pixel(t_wireframe *wireframe, float altitude)
 {
 	float	scale;
 	float	coef;
+	float	diff;
+	float	limit;
+	float	level;
 
-	wireframe->pixel.r = 0;
-	wireframe->pixel.g = 0;
-	wireframe->pixel.b = 0;
-	scale = (wireframe->z_max - wireframe->z_min) / 5;
+	diff = wireframe->z_min - wireframe->z_max;
+	level = altitude + diff;
+	scale = (wireframe->z_max - wireframe->z_min) / 4;
 	if (altitude < (wireframe->z_min + scale))
 	{
-		wireframe->pixel.r = 255;
-		coef = altitude - wireframe->z_min;
+		limit = wireframe->z_min + scale + diff;
+		coef = (limit * level) / 100;
+		wireframe->pixel.r = (char)255;
+		wireframe->pixel.g = (char)(255 * coef);
+		wireframe->pixel.b = (char)0;
 	}
 	else if (altitude < (wireframe->z_min + scale * 2))
-		section = 2;
+	{
+		limit = wireframe->z_min + (scale * 2) + diff;
+		coef = (limit * level) / 100;
+		wireframe->pixel.r = (char)(255 * (1 - coef));
+		wireframe->pixel.g = (char)255;
+		wireframe->pixel.g = (char)0;
+	}
 	else if (altitude < (wireframe->z_min + scale * 3))
-		section = 3;
-	else if (altitude < (wireframe->z_min + scale * 4))
-		section = 4;
-	else 
-		section = 5;
-
+	{
+		limit = wireframe->z_min + (scale * 3) + diff;
+		coef = (limit * level) / 100;
+		wireframe->pixel.r = (char)0;
+		wireframe->pixel.g = (char)255;
+		wireframe->pixel.g = (char)(255 * coef);
+	}
+	else
+	{
+		limit = wireframe->z_min + (scale * 4) + diff;
+		coef = (limit * level) / 100;
+		wireframe->pixel.r = (char)0;
+		wireframe->pixel.g = (char)(255 * (1 - coef));
+		wireframe->pixel.g = (char)255;
+	}
 	return (1);
 }
 
-int		near_inter(t_wireframe *w, t_pixel *pixel)
+void	create_pixel(t_wireframe *w, int x, int y)
 {
-	t_wire		x_wire;
-	t_wire		y_wire;
-	t_point		inter;
-	float		scale;
-	int			ret;
-	int i;
-	int j;
+	int	z;
+	int	i;
+	int	j;
 
+	z = w->altitudes[y][x];
+	i = (sqrt(2) / 2) * (x - y);
+	j = (sqrt(2 / 3) * z) - (((-1) / sqrt(6)) * (x + y));
+	i = i * 100;
+	j = j * 100;
+	printf("x = %d\n", i);
+	printf("y = %d\n\n", j);
+	//color_pixel(w, z);
+	w->pixel.p = ((HEIGHT - j - 1) * w->size) + ((WIDTH - i - 1) * 4);
+	w->pixel.r = (char)255;
+	w->pixel.g = (char)255;
+	w->pixel.b = (char)255;
+	w->data_addr[w->pixel.p + 2] = w->pixel.r;
+	w->data_addr[w->pixel.p + 1] = w->pixel.g;
+	w->data_addr[w->pixel.p + 0] = w->pixel.b;
+}
 
-	j = 0;
-	ret = 0;
-	scale = (wireframe->z_max - wireframe->z_min) / 5;
-	while (j < w->y_len)
+t_point	*create_mapping(t_wireframe *w)
+{
+	t_point	*map;
+	int		i;
+	float	x;
+	float	y;
+	int		z;
+	float		max_x;
+	float		max_y;
+
+	i = 0;
+	y = 0;
+	max_x = w->x_len;
+	max_y = w->y_len;
+	printf("x len = %d\n", w->x_len);
+	printf("y len = %d\n", w->y_len);
+	map = malloc(sizeof(t_point) * (w->x_len * w->y_len));
+	while (y < w->y_len)
 	{
-		i = 0;
-		while (i < w->x_len)
+		x = 0;
+		while (x < w->x_len)
 		{
-			if (i != (w->x_len - 1))
-				ret = inter_wire(x_wire);
-			if (j != (w->y_len - 1) && !ret)
-				ret = inter_wire(y_wire);
-			// inter.x = i / (w->ray.origin.x * w->ray.direction.x);
-			// inter.y = j / (w->ray.origin.y * w->ray.direction.y);
-			// inter.z = w->altitudes[j][i] / (w->ray.origin.z * w->ray.direction.z);
-			//if (inter.x == inter.y && inter.y == inter.z && inter.x != 0)
-			if (ret)
-				return (color_pixel(wireframe, w->altitudes[j][i]));
+			z = w->altitudes[(int)y][(int)x];
+			map[i].x = (sqrt(2) / 2) * (x - y) + 5;
+			map[i].y = (sqrt(2 / 3) * z) - (((-1) / sqrt(6)) * (x + y));
+			printf("POINT: x = %f | y = %f      ", x, y);
+			printf("POINT: x = %f | y = %f\n", map[i].x, map[i].y);
+			if (map[i].x > max_x)
+				max_x = map[i].x;
+			if (map[i].y > max_y)
+				max_y = map[i].y;
 			i++;
+			x++;
 		}
-		j++;
+		y++;
 	}
-	return (0);
-}
-
-void	create_pixel(t_wireframe *wireframe, int x, int y, t_matrix m)
-{
-	t_pixel	pixel;
-	int		ret;
-
-	wireframe->ray.direction.x = (x - (WIDTH / 2));
-	wireframe->ray.direction.y = (y - (HEIGHT / 2));
-	wireframe->ray.direction.z = - (WIDTH / (2 * (tan(FOV / 2))));
-	normalize(&(wireframe->ray.direction));
-	wireframe->ray.direction = get_normalized(v_mult_m(wireframe->ray.direction, m));
-	// printf("Ray Direction\nx = %f - y = %f - z = %f\n", wireframe->ray.direction.x, wireframe->ray.direction.y, wireframe->ray.direction.z);
-	ret = near_inter(wireframe, &pixel);
-	if (ret)
+	y = 0;
+	i = 0;
+	printf("x max = %f\n", max_x);
+	printf("y max = %f\n", max_y);
+	while (y < w->y_len)
 	{
-		pixel.p = ((HEIGHT - y - 1) * wireframe->size);
-		pixel.p += ((WIDTH - x - 1) * 4);
-		wireframe->data_addr[pixel.p + 2] = pixel.r;
-		wireframe->data_addr[pixel.p + 1] = pixel.g;
-		wireframe->data_addr[pixel.p + 0] = pixel.b;
+		x = 0;
+		while (x < w->x_len)
+		{
+			//printf("POINT: x = %f | y = %f\n", map[i].x, map[i].y);
+			map[i].x = (map[i].x / max_x) * WIDTH;
+			map[i].y = (map[i].y / max_y) * HEIGHT;
+			//printf("POINT: x = %f | y = %f\n\n", map[i].x, map[i].y);
+			i++;
+			x++;
+		}
+		y++;
 	}
+	return (map);
 }
 
-void	fill_window(t_wireframe *wireframe)
-{
-	int			x;
-	int			y;
-	t_point		point;
-	t_matrix	matrix;
-	t_pixel	pixel;
 
-	wireframe->ray.origin = wireframe->camera.origin;
-	matrix = rotation_matrix(wireframe->camera.direction);
-	// printf("MATRIX\nR1: %f %f %f\n", matrix.r1.x, matrix.r1.y, matrix.r1.x);
-	// printf("R2: %f %f %f\n", matrix.r2.x, matrix.r2.y, matrix.r2.x);
-	// printf("R3: %f %f %f\n", matrix.r3.x, matrix.r3.y, matrix.r3.x);
-	// printf("R4: %f %f %f\n", matrix.r4.x, matrix.r4.y, matrix.r4.x);
+void	fill_window(t_wireframe *w)
+{
+	t_point	*map;
+	int		x;
+	int		y;
+	int		i;
+
+	map = create_mapping(w);
 	y = 0;
 	while (y < HEIGHT)
 	{
 		x = 0;
 		while (x < WIDTH)
 		{
-			create_pixel(wireframe, x, y, matrix);
+			i = 0;
+			while (i < (w->x_len * w->y_len))
+			{
+				if (x == (int)map[i].x && y == (int)map[i].y)
+				{
+					w->pixel.p = ((HEIGHT - y - 1) * w->size) + ((WIDTH - x - 1) * 4);
+					w->data_addr[w->pixel.p + 2] = 255;
+					w->data_addr[w->pixel.p + 1] = 125;
+					w->data_addr[w->pixel.p + 0] = 125;
+				}
+				i++;
+			}
 			x++;
 		}
 		y++;
