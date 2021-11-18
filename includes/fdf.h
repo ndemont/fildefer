@@ -85,7 +85,7 @@ typedef struct	s_wireframe
 	int				x_len;
 	int				y_len;
 	t_ray			ray;
-	int				**altitudes;
+	float			**altitudes;
 	void			*mlx_ptr;
 	void			*win_ptr;
 	void			*img_ptr;
@@ -109,5 +109,8 @@ int		ft_cross(int keycode, t_wireframe *s);
 
 void	display_window(t_wireframe *wireframe);
 void	ft_move_cam(int keycode, t_wireframe *w);
+
+void	print_z(t_wireframe *w);
+
 
 #endif

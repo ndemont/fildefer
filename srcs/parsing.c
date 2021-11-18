@@ -78,31 +78,32 @@ char	*read_file(int fd, t_wireframe *wireframe)
 	return (content);
 }
 
-int	check_file(char *content, t_wireframe *wireframe)
+int	check_file(char *content, t_wireframe *w)
 {
 	int		i;
 	int		j;
 	char	*tmp;
 
-	wireframe->altitudes = (int **)malloc(sizeof(int *) * wireframe->y_len);
-	if (!wireframe->altitudes)
+	w->altitudes = (float **)malloc(sizeof(float *) * w->y_len);
+	if (!w->altitudes)
 		return (0);
-	wireframe->x_len = count_x_len(content);
-	printf("x len =%d\n", wireframe->x_len);
+	w->x_len = count_x_len(content);
 	i = 0;
-	while (i < wireframe->y_len)
+	while (i < w->y_len)
 	{
+		w->altitudes[i] = (float *)malloc(sizeof(float) * w->x_len);
+		if (!w->altitudes[i])
+			return 0;
 		j = 0;
-		while (j < wireframe->x_len)
+		while (j < w->x_len)
 		{
-			wireframe->altitudes[i] = malloc(sizeof(int) * wireframe->x_len);
-			if (!wireframe->altitudes[i])
-				return 0;
-			wireframe->altitudes[i][j] = ft_atoi(content);
+			w->altitudes[i][j] = (float)ft_atoi(content);
 			while (*content && *content != ' ')
 				content++;
+			content++;
 			j++;
 		}
+		content--;
 		i++;
 	}
 	return (1);
@@ -126,8 +127,5 @@ t_wireframe	*parsing(char *file)
 		return (free_wireframe(wireframe, 79));
 	if (!check_file(content, wireframe))
 		return (NULL);
-	wireframe->camera.origin.x = wireframe->x_len / 2;
-	wireframe->camera.origin.y = wireframe->y_len * 2;
-	wireframe->camera.origin.z = 30;
 	return (wireframe);
 }
