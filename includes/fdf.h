@@ -79,6 +79,8 @@ typedef struct	s_wire
 
 typedef struct	s_wireframe
 {
+	int				z_max;
+	int				z_min;
 	int				x_len;
 	int				y_len;
 	t_ray			ray;

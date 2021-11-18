@@ -120,31 +120,62 @@ t_matrix	rotation_matrix(t_point c)
 	return (matrix);
 }
 
+
+int		color_pixel(t_wireframe *wireframe, float altitude)
+{
+	float	scale;
+	float	coef;
+
+	wireframe->pixel.r = 0;
+	wireframe->pixel.g = 0;
+	wireframe->pixel.b = 0;
+	scale = (wireframe->z_max - wireframe->z_min) / 5;
+	if (altitude < (wireframe->z_min + scale))
+	{
+		wireframe->pixel.r = 255;
+		coef = altitude - wireframe->z_min;
+	}
+	else if (altitude < (wireframe->z_min + scale * 2))
+		section = 2;
+	else if (altitude < (wireframe->z_min + scale * 3))
+		section = 3;
+	else if (altitude < (wireframe->z_min + scale * 4))
+		section = 4;
+	else 
+		section = 5;
+
+	return (1);
+}
+
 int		near_inter(t_wireframe *w, t_pixel *pixel)
 {
-	float	distance;
-	t_point	inter;
+	t_wire		x_wire;
+	t_wire		y_wire;
+	t_point		inter;
+	float		scale;
+	int			ret;
 	int i;
 	int j;
+
+
 	j = 0;
+	ret = 0;
+	scale = (wireframe->z_max - wireframe->z_min) / 5;
 	while (j < w->y_len)
 	{
 		i = 0;
 		while (i < w->x_len)
 		{
-			inter.x = i / (w->ray.origin.x * w->ray.direction.x);
-			inter.y = j / (w->ray.origin.y * w->ray.direction.y);
-			inter.z = w->altitudes[j][i] / (w->ray.origin.z * w->ray.direction.z);
-			//normalize(&inter);
-			//printf("inter x	= %f - inter y	= %f - inter z	= %f\n", inter.x, inter.y, inter.z);
-			// printf("ray x	= %f - ray y	= %f - ray z	= %f\n\n", w->ray.direction.x, w->ray.direction.y, w->ray.direction.z);
-			if (inter.x == inter.y && inter.y == inter.z)
-			{
-				pixel->r = (char)255;
-				pixel->g = (char)255;
-				pixel->b = (char)255;
-				return (1);
-			}
+			if (i != (w->x_len - 1))
+				ret = inter_wire(x_wire);
+			if (j != (w->y_len - 1) && !ret)
+				ret = inter_wire(y_wire);
+			// inter.x = i / (w->ray.origin.x * w->ray.direction.x);
+			// inter.y = j / (w->ray.origin.y * w->ray.direction.y);
+			// inter.z = w->altitudes[j][i] / (w->ray.origin.z * w->ray.direction.z);
+			//if (inter.x == inter.y && inter.y == inter.z && inter.x != 0)
+			if (ret)
+				return (color_pixel(wireframe, w->altitudes[j][i]));
 			i++;
 		}
 		j++;
