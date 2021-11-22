@@ -15,25 +15,23 @@ void	display_window(t_wireframe *wireframe)
 
 int main(int ac, char **av)
 {
-	t_wireframe *wireframe;
+	t_wireframe wireframe;
 
-	wireframe = 0;
 	if (ac != 2)
 	{
 		print_error(22);
 		return (1);
 	}
-	wireframe = parsing(av[1]);
-	if (!wireframe)
+	if (!parsing(av[1], &wireframe))
 		return (1);
-	init_window(wireframe);
-	fill_window(wireframe);
-	mlx_hook(wireframe->win_ptr, 2, 1L << 0, ft_event, &wireframe);
+	init_window(&wireframe);
+	fill_window(&wireframe);
+	mlx_hook(&wireframe.win_ptr, 2, 1L << 0, ft_event, &wireframe);
 	if (!LINUX)
-		mlx_hook(wireframe->win_ptr, 17, 1L << 17, ft_cross, &wireframe);
+		mlx_hook(&wireframe.win_ptr, 17, 1L << 17, ft_cross, &wireframe);
 	else
-		mlx_hook(wireframe->win_ptr, 33, 1L << 5, ft_cross, &wireframe);
-	mlx_loop_hook(wireframe->mlx_ptr, ft_event, &wireframe);
-	display_window(wireframe);
+		mlx_hook(&wireframe.win_ptr, 33, 1L << 5, ft_cross, &wireframe);
+	mlx_loop_hook(&wireframe.mlx_ptr, ft_event, &wireframe);
+	display_window(&wireframe);
 	return (0);
 }

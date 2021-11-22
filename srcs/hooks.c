@@ -1,16 +1,20 @@
 #include "fdf.h"
 
-void	ft_new_img(t_wireframe *w)
-{
-	w->img_ptr = mlx_new_image(w->mlx_ptr, WIDTH, HEIGHT);
-	w->data_addr = (unsigned char *)mlx_get_data_addr(w->img_ptr, &(w->bits_per_pixel), &(w->size), &(w->endian));
-	fill_window(w);
-}
-
-
 static void		ft_print_w(t_wireframe *w)
 {
-	ft_new_img(w);
+	printf("printing new wind\n");
+	printf("w->mlx_ptr = %p\n", w->mlx_ptr);
+	w->img_ptr = mlx_new_image(w->mlx_ptr, WIDTH, HEIGHT);
+	printf("1\n");
+	w->data_addr = (unsigned char *)mlx_get_data_addr(w->img_ptr, &(w->bits_per_pixel), &(w->size), &(w->endian));
+	printf("2\n");
+	
+	move_x(w, 10);
+	printf("3\n");
+	
+	fill_window2(w);
+	printf("4\n");
+	
 	display_window(w);
 }
 
@@ -30,25 +34,24 @@ void			ft_move_cam(int keycode, t_wireframe *w)
 	if (keycode == MOVE_L)
 	{
     	printf("keycode = %d\n", keycode);
-		move_x(w, 10);
 		ft_print_w(w);
 
 	}
 	if (keycode == MOVE_R)
 	{
    		printf("keycode = %d\n", keycode);
-		move_x(w, -10);
+		//move_x(w, -10);
 		ft_print_w(w);
 	}
 	if (keycode == MOVE_F)
 	{
     	printf("keycode = %d\n", keycode);
-		move_y(w, 10);
+		//move_y(w, 10);
 		ft_print_w(w);
 	}
 	if (keycode == MOVE_B)
 	{
-		move_y(w, -10);
+		//move_y(w, -10);
    		printf("keycode = %d\n", keycode);
 		ft_print_w(w);
 	}

@@ -16,6 +16,7 @@ void	move_x(t_wireframe *w, int shift)
 		}
 		y++;
 	}
+	printf("x moved\n");
 }
 
 void	move_y(t_wireframe *w, int shift)

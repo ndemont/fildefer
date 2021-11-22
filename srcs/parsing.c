@@ -17,17 +17,13 @@ int		count_x_len(char *str)
 	return (++count);
 }
 
-t_wireframe	*init_wireframe(void)
+void	init_wireframe(t_wireframe *wireframe)
 {
-	t_wireframe	*wireframe;
-
-	wireframe = malloc(sizeof(t_wireframe));
-	if (!wireframe)
-		return wireframe;
 	wireframe->x_len = 0;
 	wireframe->y_len = 0;
 	wireframe->altitudes = NULL;
 	wireframe->mlx_ptr = mlx_init();
+	printf("w->mlx_ptr = %p\n", wireframe->mlx_ptr);
 	wireframe->win_ptr = NULL;
 	wireframe->img_ptr = NULL;
 	wireframe->size = 0;
@@ -36,7 +32,6 @@ t_wireframe	*init_wireframe(void)
 	wireframe->data_addr = NULL;
 	wireframe->x_shift = 500;
 	wireframe->y_shift = 200;
-	return wireframe;
 }
 
 
@@ -56,7 +51,8 @@ char	*read_file(int fd, t_wireframe *wireframe)
 	int		ret;
 
 	ret = 1;
-	content = 0;
+	content = NULL;
+	line = NULL;
 	while (ret > 0)
 	{
 		ret = get_next_line(fd, &line);
@@ -105,23 +101,26 @@ int	check_file(char *content, t_wireframe *w)
 	return (1);
 }
 
-t_wireframe	*parsing(char *file)
+int	parsing(char *file, t_wireframe *wireframe)
 {
-	t_wireframe	*wireframe;
 	char		*content;
 	int			ret;
 	int			fd;
 
-	wireframe = init_wireframe();
-	if (!wireframe)
-		return (free_wireframe(wireframe, 12));
+	init_wireframe(wireframe);
 	fd = open_file(file);
 	if (fd < 0)
-		return (free_wireframe(wireframe, 2));
+	{
+		free_wireframe(wireframe, 2);
+		return (0);
+	}
 	content = read_file(fd, wireframe);
 	if (!content)
-		return (free_wireframe(wireframe, 79));
+	{
+		free_wireframe(wireframe, 79);
+		return (0);
+	}
 	if (!check_file(content, wireframe))
-		return (NULL);
-	return (wireframe);
+		return (0);
+	return (1);
 }

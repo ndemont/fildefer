@@ -105,10 +105,9 @@ typedef struct	s_wireframe
 	float			zoom;
 	float			pos[2];
 	float			amplitude;
-	t_point**		map;
 }				t_wireframe;
 
-t_wireframe	*parsing(char *file);
+int			parsing(char *file, t_wireframe *wireframe);
 t_wireframe	*free_wireframe(t_wireframe *wireframe, int errno);
 void		print_error(int errno);
 
@@ -126,5 +125,6 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2);
 
 void	move_y(t_wireframe *w, int shift);
 void	move_x(t_wireframe *w, int shift);
+void	fill_window2(t_wireframe *w);
 
 #endif
