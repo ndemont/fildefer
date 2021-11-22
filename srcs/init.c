@@ -15,7 +15,7 @@ void    init_window(t_wireframe *w)
 
 void	init_wireframe(t_wireframe *wireframe)
 {
-
+	init_window(wireframe);
 	wireframe->x_len = 0;
 	wireframe->y_len = 0;
 	wireframe->altitudes = NULL;

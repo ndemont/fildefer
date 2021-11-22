@@ -2,8 +2,8 @@
 
 static void		ft_print_w(t_wireframe *w)
 {
-	w->img_ptr = mlx_new_image(w->mlx_ptr, WIDTH, HEIGHT);
-	w->data_addr = (unsigned char *)mlx_get_data_addr(w->img_ptr, &(w->bits_per_pixel), &(w->size), &(w->endian));
+	w->window.img_ptr = mlx_new_image(w->window.mlx_ptr, WIDTH, HEIGHT);
+	w->window.data_addr = (unsigned char *)mlx_get_data_addr(w->window.img_ptr, &(w->window.bits_per_pixel), &(w->window.size), &(w->window.endian));
 	move_x(w, 10);
 	fill_window2(w);
 	display_window(w);

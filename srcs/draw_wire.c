@@ -7,10 +7,10 @@ void	draw_pixel(t_wireframe *w, t_point	p)
 	w->pixel.g = (char)0;
 	w->pixel.b = (char)255;
 	//color_pixel(w, p.z);
-	pixel.p = ((HEIGHT - (HEIGHT - p.y) - 1) * w->size) + ((WIDTH - (WIDTH - p.x)- 1) * 4);
-	w->data_addr[pixel.p + 2] = pixel.r;
-	w->data_addr[pixel.p + 1] = pixel.g;
-	w->data_addr[pixel.p + 0] = pixel.b;
+	pixel.p = ((HEIGHT - (HEIGHT - p.y) - 1) * w->window.size) + ((WIDTH - (WIDTH - p.x)- 1) * 4);
+	w->window.data_addr[pixel.p + 2] = pixel.r;
+	w->window.data_addr[pixel.p + 1] = pixel.g;
+	w->window.data_addr[pixel.p + 0] = pixel.b;
 }
 
 void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
