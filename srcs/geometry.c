@@ -49,54 +49,44 @@ void		color_pixel(t_wireframe *wireframe, float altitude)
 	}
 }
 
-t_point	*create_mapping(t_wireframe *w)
+t_point	**create_mapping(t_wireframe *w)
 {
-	t_point	*map;
-	int		i;
+	t_point	**map;
 	float	x;
 	float	y;
 	float	z;
-	float	max_x;
-	float	max_y;
 	float	square;
 
-	i = 0;
 	y = 0;
-	max_x = w->x_len;
-	max_y = w->y_len;
-	map = malloc(sizeof(t_point) * (w->x_len * w->y_len));
+	w->x_max = w->x_len;
+	w->y_max = w->y_len;
+	map = malloc(sizeof(t_point *) * (w->y_len));
 	while (y < w->y_len)
 	{
+		map[(int)y] = malloc(sizeof(t_point) * w->x_len);
 		x = 0;
 		while (x < w->x_len)
 		{
 			z = w->altitudes[(int)y][(int)x];
-			map[i].z = z;
-			map[i].x = (sqrtf(2.0) / 2.0) * (x - y) + 5.0;
-			map[i].y = (sqrtf(2.0 / 3.0) * z) - (((-1.0) / sqrtf(6.0)) * (x + y));
-			if (map[i].x > max_x)
-				max_x = map[i].x;
-			if (map[i].y > max_y)
-				max_y = map[i].y;
-			i++;
+			map[(int)y][(int)x].z = z;
+			map[(int)y][(int)x].x = (sqrtf(2.0) / 2.0) * (x - y);
+			map[(int)y][(int)x].y = (sqrtf(2.0 / 3.0) * z) - (((-1.0) / sqrtf(6.0)) * (x + y));
+			if (map[(int)y][(int)x].x > w->x_max)
+				w->x_max = map[(int)y][(int)x].x;
+			if (map[(int)y][(int)x].y > w->y_max)
+				w->y_max = map[(int)y][(int)x].y;
 			x++;
 		}
 		y++;
 	}
 	y = 0;
-	i = 0;
-	printf("x max = %f\n", max_x);
-	printf("y max = %f\n", max_y);
 	while (y < w->y_len)
 	{
 		x = 0;
 		while (x < w->x_len)
 		{
-			//printf("POINT: x = %f | y = %f\n", map[i].x, map[i].y);
-			map[i].x = ((map[i].x / max_x) * WIDTH * 0.8) + 170;
-			map[i].y = ((map[i].y / max_y) * HEIGHT * 0.8) + 50;
-			//printf("POINT: x = %f | y = %f\n\n", map[i].x, map[i].y);
-			i++;
+			map[(int)y][(int)x].x = ((map[(int)y][(int)x].x / w->x_max) * WIDTH * 0.6) + w->x_shift;
+			map[(int)y][(int)x].y = ((map[(int)y][(int)x].y / w->y_max) * HEIGHT * 0.6) + w->y_shift;
 			x++;
 		}
 		y++;
@@ -107,33 +97,32 @@ t_point	*create_mapping(t_wireframe *w)
 
 void	fill_window(t_wireframe *w)
 {
-	t_point	*map;
-	float	altitude;
+	t_point	**map;
 	int		x;
 	int		y;
 	int		i;
 
 	map = create_mapping(w);
 	y = 0;
-	while (y < HEIGHT)
+	while (y < w->y_len)
 	{
 		x = 0;
-		while (x < WIDTH)
+		while (x < w->y_len)
 		{
-			i = 0;
-			while (i < (w->x_len * w->y_len))
+			if (map[y][x].x >= 0 && map[y][x].x < WIDTH && map[y][x].y >= 0 && map[y][x].y < HEIGHT)
 			{
-				if (x == (int)map[i].x && y == (int)map[i].y)
-				{
-					altitude = map[i].z;
-					color_pixel(w, map[i].z);
-					w->pixel.p = ((HEIGHT - (HEIGHT - y) - 1) * w->size) + ((WIDTH - (WIDTH - x)- 1) * 4);
-					w->data_addr[w->pixel.p + 2] = w->pixel.r;
-					w->data_addr[w->pixel.p + 1] = w->pixel.g;
-					w->data_addr[w->pixel.p + 0] = w->pixel.b;
-					break ;
-				}
-				i++;
+				//if (y < w->y_len - 1)
+				//	draw_wire(w, map[y][x], map[y + 1][x]);
+				//if (x < w->x_len - 1)
+				//	draw_wire(w, map[y][x], map[y][x + 1]);
+				w->pixel.r = (char)255;
+				w->pixel.g = (char)255;
+				w->pixel.b = (char)255;
+				//color_pixel(w, map[x][y].z);
+				w->pixel.p = ((HEIGHT - (HEIGHT - (int)map[y][x].y) - 1) * w->size) + ((WIDTH - (WIDTH - (int)map[y][x].x)- 1) * 4);
+				w->data_addr[w->pixel.p + 2] = w->pixel.r;
+				w->data_addr[w->pixel.p + 1] = w->pixel.g;
+				w->data_addr[w->pixel.p + 0] = w->pixel.b;
 			}
 			x++;
 		}

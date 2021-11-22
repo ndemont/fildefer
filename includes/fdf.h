@@ -35,7 +35,6 @@
 #endif
 
 
-
 typedef struct		s_img
 {
 	void			*img_ptr;
@@ -80,8 +79,15 @@ typedef struct	s_wire
 typedef struct	s_wireframe
 {
 	int				point_nbr;
+	int				x_shift;
+	int				y_shift;
+	int				x_max;
+	int				x_min;
 	int				z_max;
 	int				z_min;
+	int				y_max;
+	int				y_min;
+	t_point			**map;
 	int				x_len;
 	int				y_len;
 	t_ray			ray;
@@ -96,6 +102,9 @@ typedef struct	s_wireframe
 	t_ray			camera;
 	float			direction;
 	t_pixel			pixel;
+	float			zoom;
+	float			pos[2];
+	float			amplitude;
 }				t_wireframe;
 
 t_wireframe	*parsing(char *file);
@@ -111,6 +120,7 @@ void	display_window(t_wireframe *wireframe);
 void	ft_move_cam(int keycode, t_wireframe *w);
 
 void	print_z(t_wireframe *w);
-
+void	color_pixel(t_wireframe *wireframe, float altitude);
+void	draw_wire(t_wireframe *w, t_point p1, t_point p2);
 
 #endif

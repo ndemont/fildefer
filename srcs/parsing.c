@@ -34,12 +34,8 @@ t_wireframe	*init_wireframe(void)
 	wireframe->endian = 0;
 	wireframe->bits_per_pixel = 0;
 	wireframe->data_addr = NULL;
-	wireframe->camera.origin.x = 0;
-	wireframe->camera.origin.y = 0;
-	wireframe->camera.origin.z = 0;
-	wireframe->camera.direction.x = 0;
-	wireframe->camera.direction.y = -1;
-	wireframe->camera.direction.z = 0;
+	wireframe->x_shift = 500;
+	wireframe->y_shift = 200;
 	return wireframe;
 }
 
