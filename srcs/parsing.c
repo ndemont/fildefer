@@ -17,22 +17,6 @@ int		count_x_len(char *str)
 	return (++count);
 }
 
-void	init_wireframe(t_wireframe *wireframe)
-{
-	wireframe->x_len = 0;
-	wireframe->y_len = 0;
-	wireframe->altitudes = NULL;
-	wireframe->mlx_ptr = mlx_init();
-	printf("w->mlx_ptr = %p\n", wireframe->mlx_ptr);
-	wireframe->win_ptr = NULL;
-	wireframe->img_ptr = NULL;
-	wireframe->size = 0;
-	wireframe->endian = 0;
-	wireframe->bits_per_pixel = 0;
-	wireframe->data_addr = NULL;
-	wireframe->x_shift = 500;
-	wireframe->y_shift = 200;
-}
 
 
 int	open_file(char *file)
@@ -41,6 +25,69 @@ int	open_file(char *file)
 
 	fd = open(file, O_RDONLY);
 	return (fd);
+}
+
+
+int	get_dimensions(int fd, t_wireframe *wireframe)
+{
+	char	*line;
+	int		ret;
+	int		i;
+
+	ret = 1;
+	line = NULL;
+	while (ret > 0)
+	{
+		ret = get_next_line(fd, &line);
+		if (ret < 0)
+		{
+			free(line);
+			return (0);
+		}
+		i = 0;
+		while (line[i])
+		{
+			while (line[i] && line[i] != ' ')
+				i++;
+			wireframe->x_len++;
+		}
+		wireframe->y_len++;
+		free(line);
+	}
+	return (1);
+}
+
+int	fill_map(t_wireframe* w, int i)
+{
+	int j;
+
+	w->map[i] = (t_point *)malloc(sizeof(t_point) * w->x_len);
+
+}
+
+int	read2_file(int fd, t_wireframe *wireframe)
+{
+	char	*line;
+	int		y;
+	int		ret;
+
+	y = 0;
+	wireframe->map = (t_point **)malloc(sizeof(t_point *) * (w->y_len));
+	ret = 1;
+	line = NULL;
+	while (ret > 0)
+	{
+		ret = get_next_line(fd, &line);
+		if (ret < 0)
+		{
+			free(line);
+			return (0);
+		}
+		fill_map(wireframe, line, y);
+		y++;
+	}
+	printf("content	%p\n", content);
+	return (content);
 }
 
 char	*read_file(int fd, t_wireframe *wireframe)
@@ -64,17 +111,17 @@ char	*read_file(int fd, t_wireframe *wireframe)
 		}
 		wireframe->y_len++;
 		tmp = content;
-		content = ft_strjoin(content, line);
-		//printf("content	%p\n%s\n", content, content);
-		if (tmp)
-			free(tmp);
-		tmp = content;
-		content = ft_strjoin(content, "\n");
-		//printf("content	%p\n%s\n", content, content);
+		content = ft_strjoin(tmp, line);
 		if (tmp)
 			free(tmp);
 		free(line);
+		//printf("content	%p\n%s\n", content, content);
+		tmp = content;
+		content = ft_strjoin(tmp, "\n");
+		if (tmp)
+			free(tmp);
 	}
+	printf("content	%p\n", content);
 	return (content);
 }
 
@@ -122,7 +169,7 @@ int	parsing(char *file, t_wireframe *wireframe)
 		free_wireframe(wireframe, 2);
 		return (0);
 	}
-	content = read_file(fd, wireframe);
+	ret = read_file(fd, wireframe);
 	if (!content)
 	{
 		free_wireframe(wireframe, 79);

@@ -16,6 +16,8 @@
 #define FOV (70 * (M_PI / 180))
 #define HEIGHT 1000
 #define WIDTH 1000
+#define	X_SHIFT 500
+#define	Y_SHIFT 200
 # if LINUX == 1
 #  define MOVE_R 65363
 #  define MOVE_L 65361
@@ -76,11 +78,19 @@ typedef struct	s_wire
 	t_point	end;
 }				t_wire;
 
+typedef struct	s_window
+{
+	int				size;
+	int				endian;
+	int				bits_per_pixel;
+	void			*mlx_ptr;
+	void			*win_ptr;
+	void			*img_ptr;
+	unsigned char	*data_addr;
+}				t_window;
+
 typedef struct	s_wireframe
 {
-	int				point_nbr;
-	int				x_shift;
-	int				y_shift;
 	int				x_max;
 	int				x_min;
 	int				z_max;
@@ -92,19 +102,10 @@ typedef struct	s_wireframe
 	int				y_len;
 	t_ray			ray;
 	float			**altitudes;
-	void			*mlx_ptr;
-	void			*win_ptr;
-	void			*img_ptr;
-	int				size;
-	int				endian;
-	int				bits_per_pixel;
-	unsigned char	*data_addr;
-	t_ray			camera;
-	float			direction;
 	t_pixel			pixel;
-	float			zoom;
 	float			pos[2];
 	float			amplitude;
+	t_window		window;
 }				t_wireframe;
 
 int			parsing(char *file, t_wireframe *wireframe);
