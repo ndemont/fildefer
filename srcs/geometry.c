@@ -60,10 +60,10 @@ t_point	**create_mapping(t_wireframe *w)
 	y = 0;
 	w->x_max = w->x_len;
 	w->y_max = w->y_len;
-	map = malloc(sizeof(t_point *) * (w->y_len));
+	map = (t_point **)malloc(sizeof(t_point *) * (w->y_len));
 	while (y < w->y_len)
 	{
-		map[(int)y] = malloc(sizeof(t_point) * w->x_len);
+		map[(int)y] = (t_point *)malloc(sizeof(t_point) * w->x_len);
 		x = 0;
 		while (x < w->x_len)
 		{

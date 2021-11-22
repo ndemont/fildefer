@@ -57,14 +57,22 @@ char	*read_file(int fd, t_wireframe *wireframe)
 	{
 		ret = get_next_line(fd, &line);
 		if (ret < 0)
+		{
+			if (line)
+				free(line);
 			return (content);
+		}
 		wireframe->y_len++;
 		tmp = content;
 		content = ft_strjoin(content, line);
-		free(tmp);
+		//printf("content	%p\n%s\n", content, content);
+		if (tmp)
+			free(tmp);
 		tmp = content;
 		content = ft_strjoin(content, "\n");
-		free(tmp);
+		//printf("content	%p\n%s\n", content, content);
+		if (tmp)
+			free(tmp);
 		free(line);
 	}
 	return (content);
@@ -87,10 +95,10 @@ int	check_file(char *content, t_wireframe *w)
 		if (!w->altitudes[i])
 			return 0;
 		j = 0;
-		while (j < w->x_len)
+		while (j < w->x_len && *content)
 		{
 			w->altitudes[i][j] = (float)ft_atoi(content);
-			while (*content && *content != ' ')
+			while (*content && *content != ' ' && *content != '\n')
 				content++;
 			content++;
 			j++;
