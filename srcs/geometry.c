@@ -129,3 +129,56 @@ void	fill_window(t_wireframe *w)
 		y++;
 	}
 }
+
+
+t_point	**create_mapping2(t_wireframe *w)
+{
+	t_point	**map;
+	float	x;
+	float	y;
+
+	y = 0;
+	while (y < w->y_len)
+	{
+		x = 0;
+		while (x < w->x_len)
+		{
+			map[(int)y][(int)x].x = ((map[(int)y][(int)x].x / w->x_max) * WIDTH * 0.6) + w->x_shift;
+			map[(int)y][(int)x].y = ((map[(int)y][(int)x].y / w->y_max) * HEIGHT * 0.6) + w->y_shift;
+			x++;
+		}
+		y++;
+	}
+	return (map);
+}
+
+
+void	fill_window2(t_wireframe *w)
+{
+	t_point	**map;
+	int		x;
+	int		y;
+	int		i;
+
+	map = create_mapping(w);
+	y = 0;
+	while (y < w->y_len)
+	{
+		x = 0;
+		while (x < w->y_len)
+		{
+			if (map[y][x].x >= 0 && map[y][x].x < WIDTH && map[y][x].y >= 0 && map[y][x].y < HEIGHT)
+			{
+				w->pixel.r = (char)255;
+				w->pixel.g = (char)255;
+				w->pixel.b = (char)255;
+				w->pixel.p = ((HEIGHT - (HEIGHT - (int)map[y][x].y) - 1) * w->size) + ((WIDTH - (WIDTH - (int)map[y][x].x)- 1) * 4);
+				w->data_addr[w->pixel.p + 2] = w->pixel.r;
+				w->data_addr[w->pixel.p + 1] = w->pixel.g;
+				w->data_addr[w->pixel.p + 0] = w->pixel.b;
+			}
+			x++;
+		}
+		y++;
+	}
+}

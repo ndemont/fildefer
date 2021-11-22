@@ -105,6 +105,7 @@ typedef struct	s_wireframe
 	float			zoom;
 	float			pos[2];
 	float			amplitude;
+	t_point**		map;
 }				t_wireframe;
 
 t_wireframe	*parsing(char *file);
@@ -122,5 +123,8 @@ void	ft_move_cam(int keycode, t_wireframe *w);
 void	print_z(t_wireframe *w);
 void	color_pixel(t_wireframe *wireframe, float altitude);
 void	draw_wire(t_wireframe *w, t_point p1, t_point p2);
+
+void	move_y(t_wireframe *w, int shift);
+void	move_x(t_wireframe *w, int shift);
 
 #endif

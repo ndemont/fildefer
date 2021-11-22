@@ -18,8 +18,10 @@ int				ft_event(int keycode, t_wireframe *w)
 {
 	if (!ft_close_win(keycode, w))
 	{
+    	printf("keycode = %d\n", keycode);
 		exit(0);
 	}
+	ft_move_cam(keycode, w);
 	return (1);
 }
 
@@ -28,20 +30,25 @@ void			ft_move_cam(int keycode, t_wireframe *w)
 	if (keycode == MOVE_L)
 	{
     	printf("keycode = %d\n", keycode);
+		move_x(w, 10);
 		ft_print_w(w);
+
 	}
 	if (keycode == MOVE_R)
 	{
    		printf("keycode = %d\n", keycode);
+		move_x(w, -10);
 		ft_print_w(w);
 	}
 	if (keycode == MOVE_F)
 	{
     	printf("keycode = %d\n", keycode);
+		move_y(w, 10);
 		ft_print_w(w);
 	}
 	if (keycode == MOVE_B)
 	{
+		move_y(w, -10);
    		printf("keycode = %d\n", keycode);
 		ft_print_w(w);
 	}
@@ -49,6 +56,7 @@ void			ft_move_cam(int keycode, t_wireframe *w)
 
 int		ft_cross(int keycode, t_wireframe *w)
 {
+   	printf("keycode = %d\n", keycode);
 	(void)keycode;
 	(void)w;
 	exit(0);
