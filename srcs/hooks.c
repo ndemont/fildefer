@@ -20,7 +20,6 @@ int				ft_event(int keycode, t_wireframe *w)
 	{
 		exit(0);
 	}
-	ft_move_cam(keycode, w);
 	return (1);
 }
 
@@ -29,25 +28,21 @@ void			ft_move_cam(int keycode, t_wireframe *w)
 	if (keycode == MOVE_L)
 	{
     	printf("keycode = %d\n", keycode);
-		w->camera.origin.x += 5;
 		ft_print_w(w);
 	}
 	if (keycode == MOVE_R)
 	{
    		printf("keycode = %d\n", keycode);
-		w->camera.origin.x -= 5;
 		ft_print_w(w);
 	}
 	if (keycode == MOVE_F)
 	{
     	printf("keycode = %d\n", keycode);
-		w->camera.origin.z -= 5;
 		ft_print_w(w);
 	}
 	if (keycode == MOVE_B)
 	{
    		printf("keycode = %d\n", keycode);
-		w->camera.origin.z += 5;
 		ft_print_w(w);
 	}
 }
