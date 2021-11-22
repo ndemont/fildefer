@@ -57,22 +57,39 @@ int	get_dimensions(int fd, t_wireframe *wireframe)
 	return (1);
 }
 
-int	fill_map(t_wireframe* w, int i)
+int	fill_map(t_wireframe* w, char *line, int y)
 {
-	int j;
+	int	i;
+	int	x;
 
-	w->map[i] = (t_point *)malloc(sizeof(t_point) * w->x_len);
-
+	w->map[y] = (t_point *)malloc(sizeof(t_point) * w->x_len);
+	if (!w->map[y])
+		return (0);
+	i = 0;
+	x = 0;
+	while (line[i])
+	{
+		w->map[y][x].y = i;
+		w->map[y][x].x = x;
+		w->map[y][x].z = (float)ft_atoi(&line[i]);
+		while (line[i] && line[i] != ' ')
+			i++;
+		if (!line[i])
+			return (1);
+		i++;
+		x++;
+	}
+	return (1);
 }
 
-int	read2_file(int fd, t_wireframe *wireframe)
+int	read2_file(int fd, t_wireframe *w)
 {
 	char	*line;
 	int		y;
 	int		ret;
 
 	y = 0;
-	wireframe->map = (t_point **)malloc(sizeof(t_point *) * (w->y_len));
+	w->map = (t_point **)malloc(sizeof(t_point *) * (w->y_len));
 	ret = 1;
 	line = NULL;
 	while (ret > 0)
@@ -83,11 +100,12 @@ int	read2_file(int fd, t_wireframe *wireframe)
 			free(line);
 			return (0);
 		}
-		fill_map(wireframe, line, y);
+		if (!fill_map(w, line, y))
+			return (0);
+		free(line);
 		y++;
 	}
-	printf("content	%p\n", content);
-	return (content);
+	return (1);
 }
 
 char	*read_file(int fd, t_wireframe *wireframe)
@@ -169,13 +187,12 @@ int	parsing(char *file, t_wireframe *wireframe)
 		free_wireframe(wireframe, 2);
 		return (0);
 	}
-	ret = read_file(fd, wireframe);
-	if (!content)
+	if (!read2_file(fd, wireframe))
 	{
 		free_wireframe(wireframe, 79);
 		return (0);
 	}
-	if (!check_file(content, wireframe))
-		return (0);
+	//if (!check_file(content, wireframe))
+	//	return (0);
 	return (1);
 }

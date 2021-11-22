@@ -128,4 +128,7 @@ void	move_y(t_wireframe *w, int shift);
 void	move_x(t_wireframe *w, int shift);
 void	fill_window2(t_wireframe *w);
 
+
+void	init_wireframe(t_wireframe *wireframe);
+
 #endif
