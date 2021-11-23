@@ -49,27 +49,10 @@ void		color_pixel(t_wireframe *wireframe, float altitude)
 	}
 }
 
-void	set_map(t_wireframe *w, float x_shift, float y_shift, float zoom)
+void	set_map(t_wireframe *w)
 {
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < w->y_len)
-	{
-		x = 0;
-		while (x < w->y_len)
-		{
-			w->map[y][x].x = ((w->map[y][x].x / w->x_max) * WIDTH * zoom) + x_shift;
-			w->map[y][x].y = ((w->map[y][x].y / w->y_max) * HEIGHT * zoom) + y_shift;
-			if (w->map[y][x].x > w->x_max)
-				w->x_max = w->map[y][x].x;
-			if (w->map[y][x].y > w->y_max)
-				w->y_max = w->map[y][x].y;
-			x++;
-		}
-		y++;
-	}
+	center_map(w);
+	//zoom_map(w, ZOOM);
 }
 
 

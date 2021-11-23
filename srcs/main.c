@@ -17,7 +17,7 @@ int main(int ac, char **av)
 	}
 	if (!parsing(av[1], &wireframe))
 		return (1);
-	set_map(&wireframe, X_SHIFT, Y_SHIFT, ZOOM);
+	set_map(&wireframe);
 	fill_window(&wireframe);
 	display_window(&wireframe);
 	return (0);

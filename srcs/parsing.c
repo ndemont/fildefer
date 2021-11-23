@@ -48,6 +48,19 @@ int	get_dimensions(char *file, t_wireframe *wireframe)
 	return (1);
 }
 
+
+void	update_limits(t_wireframe *w, float x, float y)
+{
+	if (x > w->x_max)
+		w->x_max = x;
+	if (y > w->y_max)
+		w->y_max = y;
+	if (x < w->x_min)
+		w->x_min = x;
+	if (y < w->y_min)
+		w->y_min = y;
+}
+
 int	fill_map(t_wireframe* w, char *line, int y)
 {
 	int	i;
@@ -63,6 +76,7 @@ int	fill_map(t_wireframe* w, char *line, int y)
 		w->map[y][x].z = (float)ft_atoi(&line[i]);
 		w->map[y][x].x = (sqrtf(2.0) / 2.0) * (x - y);
 		w->map[y][x].y = (sqrtf(2.0 / 3.0) * w->map[y][x].z) - (((-1.0) / sqrtf(6.0)) * (x + y));
+		update_limits(w, w->map[y][x].x, w->map[y][x].y);
 		while (line[i] && line[i] != ' ')
 			i++;
 		if (!line[i])
@@ -70,6 +84,10 @@ int	fill_map(t_wireframe* w, char *line, int y)
 		i++;
 		x++;
 	}
+	printf("X MAX: %f\n", w->x_max);
+	printf("X MIN: %f\n", w->x_min);
+	printf("Y MAX: %f\n", w->y_max);
+	printf("Y MIN: %f\n", w->y_min);
 	return (1);
 }
 

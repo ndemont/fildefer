@@ -25,5 +25,9 @@ void	init_wireframe(t_wireframe *wireframe)
 	init_pixel(&wireframe->pixel, 255, 255, 255);
 	wireframe->x_len = 0;
 	wireframe->y_len = 0;
+	wireframe->x_max = 0;
+	wireframe->y_max = 0;
+	wireframe->x_min = 0;
+	wireframe->y_min = 0;
 	wireframe->map = NULL;
 }

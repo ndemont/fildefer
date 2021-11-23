@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:39:26 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/23 11:58:47 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/23 17:51:30 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@
 #define FOV (70 * (M_PI / 180))
 #define HEIGHT 1000
 #define WIDTH 1000
-#define	X_SHIFT 500
+#define	X_SHIFT 350
 #define	Y_SHIFT 200
-#define ZOOM 100
+#define ZOOM 1.5
 # if LINUX == 1
 #  define MOVE_R 65363
 #  define MOVE_L 65361
@@ -104,13 +104,17 @@ typedef struct	s_window
 
 typedef struct	s_wireframe
 {
-	int				x_max;
-	int				y_max;
-	t_point			**map;
-	int				x_len;
-	int				y_len;
+	float			x_max;
+	float			y_max;
+	float			x_min;
+	float			y_min;
+	float			x_center;
+	float			y_center;
+	float			x_len;
+	float			y_len;
 	t_pixel			pixel;
 	t_window		window;
+	t_point			**map;
 }				t_wireframe;
 
 int			parsing(char *file, t_wireframe *wireframe);
@@ -145,7 +149,9 @@ void	init_pixel(t_pixel *pixel, int r, int g, int b);
 /*                           Map Settings                                     */
 /* ************************************************************************** */
 
-void	set_map(t_wireframe *w, float x_shift, float y_shift, float zoom);
+void	set_map(t_wireframe *w);
+void	center_map(t_wireframe*w);
+void	zoom_map(t_wireframe *w, float zoom);
 void	move_x(t_wireframe *w, int shift);
 void	move_y(t_wireframe *w, int shift);
 void	zoom(t_wireframe*w, int	zoom);
