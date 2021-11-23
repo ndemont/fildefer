@@ -48,8 +48,12 @@ void	zoom(t_wireframe*w, int	zoom)
 		x = 0;
 		while (x < w->x_len)
 		{
+			w->map[y][x].x *= zoom;
 			w->map[y][x].y *= zoom;
-			w->map[y][x].y *= zoom;
+			if (w->map[y][x].x > w->x_max)
+				w->x_max = w->map[y][x].x;
+			if (w->map[y][x].y > w->y_max)
+				w->y_max = w->map[y][x].y;
 			x++;
 		}
 		y++;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/23 10:39:26 by ndemont           #+#    #+#             */
+/*   Updated: 2021/11/23 11:58:47 by ndemont          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FDF_HPP
 #define FDF_HPP
 
@@ -18,6 +30,7 @@
 #define WIDTH 1000
 #define	X_SHIFT 500
 #define	Y_SHIFT 200
+#define ZOOM 100
 # if LINUX == 1
 #  define MOVE_R 65363
 #  define MOVE_L 65361
@@ -92,19 +105,11 @@ typedef struct	s_window
 typedef struct	s_wireframe
 {
 	int				x_max;
-	int				x_min;
-	int				z_max;
-	int				z_min;
 	int				y_max;
-	int				y_min;
 	t_point			**map;
 	int				x_len;
 	int				y_len;
-	t_ray			ray;
-	float			**altitudes;
 	t_pixel			pixel;
-	float			pos[2];
-	float			amplitude;
 	t_window		window;
 }				t_wireframe;
 
@@ -128,7 +133,27 @@ void	move_y(t_wireframe *w, int shift);
 void	move_x(t_wireframe *w, int shift);
 void	fill_window2(t_wireframe *w);
 
+/* ************************************************************************** */
+/*                           Initialization                                   */
+/* ************************************************************************** */
 
 void	init_wireframe(t_wireframe *wireframe);
+void	init_window(t_window *window);
+void	init_pixel(t_pixel *pixel, int r, int g, int b);
+
+/* ************************************************************************** */
+/*                           Map Settings                                     */
+/* ************************************************************************** */
+
+void	set_map(t_wireframe *w, float x_shift, float y_shift, float zoom);
+void	move_x(t_wireframe *w, int shift);
+void	move_y(t_wireframe *w, int shift);
+void	zoom(t_wireframe*w, int	zoom);
+
+/* ************************************************************************** */
+/*                           Window Settings                                     */
+/* ************************************************************************** */
+
+void	fill_window(t_wireframe *w);
 
 #endif

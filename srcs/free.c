@@ -7,13 +7,13 @@ t_wireframe	*free_wireframe(t_wireframe *wireframe, int errno)
 	print_error(errno);
 	if (wireframe)
 	{
-		if (wireframe->altitudes)
+		if (wireframe->map)
 		{
 			i = 0;
 			while (i < wireframe->y_len)
 			{
-				free(wireframe->altitudes[i]);
-				wireframe->altitudes[i] = NULL;
+				free(wireframe->map[i]);
+				wireframe->map[i] = NULL;
 				i++;
 			}
 		}
