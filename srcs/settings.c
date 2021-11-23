@@ -84,6 +84,21 @@ void	center_map(t_wireframe *w)
 	}
 }
 
+float	set_zoom(t_wireframe *w)
+{
+	float	x_coef;
+	float	y_coef;
+
+	x_coef = (WIDTH - 50) / (w->x_max - w->x_min);
+	y_coef = (WIDTH - 50) / (w->y_max - w->y_min);
+	printf("coef x %f\n", x_coef);
+	printf("coef y %f\n", y_coef);
+	if (x_coef < y_coef)
+		return (x_coef);
+	else
+		return (y_coef);
+}
+
 void	zoom_map(t_wireframe *w, float zoom)
 {
 	int	x;
@@ -95,17 +110,13 @@ void	zoom_map(t_wireframe *w, float zoom)
 		x = 0;
 		while (x < w->x_len)
 		{
-			if (w->map[y][x].x > (float)WIDTH / 2)
-				w->map[y][x].x += (w->map[y][x].x * zoom) - w->map[y][x].x;
-			else if (w->map[y][x].x < (float)WIDTH / 2)
-				w->map[y][x].x -= (w->map[y][x].x * zoom) - w->map[y][x].x;
-			if (w->map[y][x].y > (float)HEIGHT / 2)
-				w->map[y][x].y += (w->map[y][x].y * zoom) - w->map[y][x].y;
-			else if (w->map[y][x].y < (float)HEIGHT / 2)
-				w->map[y][x].y -= (w->map[y][x].y * zoom) - w->map[y][x].y;
+			w->map[y][x].x *= zoom;
+			w->map[y][x].y *= zoom;
+			update_limits(w, w->map[y][x].x, w->map[y][x].y);
 			x++;
 		}
 		y++;
 	}
+	center_map(w);
 }
 

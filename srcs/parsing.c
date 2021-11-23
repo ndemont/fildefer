@@ -84,10 +84,6 @@ int	fill_map(t_wireframe* w, char *line, int y)
 		i++;
 		x++;
 	}
-	printf("X MAX: %f\n", w->x_max);
-	printf("X MIN: %f\n", w->x_min);
-	printf("Y MAX: %f\n", w->y_max);
-	printf("Y MIN: %f\n", w->y_min);
 	return (1);
 }
 

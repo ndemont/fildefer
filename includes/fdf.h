@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:39:26 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/23 17:51:30 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/23 20:02:09 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 #define WIDTH 1000
 #define	X_SHIFT 350
 #define	Y_SHIFT 200
-#define ZOOM 1.5
 # if LINUX == 1
 #  define MOVE_R 65363
 #  define MOVE_L 65361
@@ -155,7 +154,8 @@ void	zoom_map(t_wireframe *w, float zoom);
 void	move_x(t_wireframe *w, int shift);
 void	move_y(t_wireframe *w, int shift);
 void	zoom(t_wireframe*w, int	zoom);
-
+void	update_limits(t_wireframe *w, float x, float y);
+float	set_zoom(t_wireframe *w);
 /* ************************************************************************** */
 /*                           Window Settings                                     */
 /* ************************************************************************** */

@@ -51,8 +51,11 @@ void		color_pixel(t_wireframe *wireframe, float altitude)
 
 void	set_map(t_wireframe *w)
 {
-	center_map(w);
-	//zoom_map(w, ZOOM);
+	float zoom;
+
+	zoom = set_zoom(w);
+	printf("zoom %f\n", zoom);
+	zoom_map(w, zoom);
 }
 
 
