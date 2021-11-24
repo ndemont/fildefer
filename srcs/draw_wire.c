@@ -1,26 +1,27 @@
 #include "fdf.h"
 
-void	draw_pixel(t_wireframe *w, t_point	p)
+void	draw_pixel(t_wireframe *w, t_point	p, char	*s)
 {
-	t_pixel	pixel;
+	if (s)
+		printf("%s\n", s);
 	w->pixel.r = (char)255;
-	w->pixel.g = (char)0;
+	w->pixel.g = (char)255;
 	w->pixel.b = (char)255;
-	//color_pixel(w, p.z);
-	pixel.p = ((HEIGHT - (HEIGHT - p.y) - 1) * w->window.size) + ((WIDTH - (WIDTH - p.x)- 1) * 4);
-	w->window.data_addr[pixel.p + 2] = pixel.r;
-	w->window.data_addr[pixel.p + 1] = pixel.g;
-	w->window.data_addr[pixel.p + 0] = pixel.b;
+	color_pixel(w, p.z);
+	w->pixel.p = ((HEIGHT - ((int)p.y)) * w->window.size) + ((WIDTH - ((int)p.x)) * 4);
+	w->window.data_addr[w->pixel.p + 2] = w->pixel.r;
+	w->window.data_addr[w->pixel.p + 1] = w->pixel.g;
+	w->window.data_addr[w->pixel.p + 0] = w->pixel.b;
 }
 
 void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 {
-	float	dx;
-	float	dy;
+	int		dx;
+	int		dy;
 	float	e;
 
-	dx = p2.x - p1.x;
-	dy = p2.y - p1.y;
+	dx = (int)p2.x - (int)p1.x;
+	dy = (int)p2.y - (int)p1.y;
 	if (dx != 0)
 	{
 		if (dx > 0)
@@ -34,9 +35,9 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 						e = dx;
 						dx = dx * 2 ;
 						dy = dy * 2 ;
-						while ((int)p1.x < (int)p2.x)
+						while ((int)p1.x != (int)p2.x)
 						{
-							draw_pixel(w, p1);
+							draw_pixel(w, p1, 0);
 							e -= dy;
 							if (e < 0)
 							{
@@ -48,12 +49,13 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 					}
 					else // vecteur oblique proche de la verticale, dans le 2d octant
 					{
+						// printf("ici\n");
 						e = dy;
 						dy = dy * 2;
 						dx = dx * 2;
 						while ((int)p1.y != (int)p2.y)
 						{
-							draw_pixel(w, p1);
+							draw_pixel(w, p1, 0);
 							e -= dx;
 							if (e < 0)
 							{
@@ -66,17 +68,16 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 				}
 				else // dy < 0 (et dx > 0)
 				{
-						//printf("Step 9\n");
 					if (dx >= -dy)
 					{
 						//printf("Step 10\n");
 						e = dx;
 						dx = dx * 2;
 						dy = dy * 2;
-						while ((int)p1.x < (int)p2.x)
+						while ((int)p1.x != (int)p2.x)
 						{
 						//printf("Step 11\n");
-							draw_pixel(w, p1);
+							draw_pixel(w, p1, 0);
 							e += dy;
 							if (e < 0)
 							{
@@ -89,14 +90,12 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 					else
 					{
 						//printf("Step 12\n");
-
 						e = dy;
 						dy = dy * 2;
 						dx = dx * 2;
-						while ((int)p1.y > (int)p2.y)
+						while ((int)p1.y != (int)p2.y)
 						{
-						//printf("Step 13\n");
-							draw_pixel(w, p1);
+							draw_pixel(w, p1, 0);
 							e += dx;
 							if (e > 0)
 							{
@@ -110,58 +109,44 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 			}
 			else
 			{
-						//printf("Step 14\n");
-
-				while ((int)p1.x < (int)p2.x)
+				while ((int)p1.x != (int)p2.x)
 				{
-						//printf("Step 15\n");
-
-					draw_pixel(w, p1);
+					draw_pixel(w, p1, 0);
 					p1.x += 1;
 				}
 			}
 		}
 		else
 		{
-			//printf("Step 16\n");
 			if (dy != 0)
 			{
-				//printf("Step 17\n");
 				if (dy > 0)
 				{
-					//printf("Step 18\n");
 					if (-dx >= dy)
 					{
-						//printf("Step 19\n");
 						e = dx;
 						dy = dy * 2;
 						dx = dx * 2;
-						while ((int)p1.x < (int)p2.x)
+						while ((int)p1.x != (int)p2.x)
 						{
-							//printf("Step 20\n");
-							//printf("x1 = %d\n", (int)p1.x);
-							//printf("x2 = %d\n", (int)p2.x);
-							draw_pixel(w, p1);
+							draw_pixel(w, p1, 0);
 							e += dy;
 							if (e >= 0)
 							{
 								p1.y += 1;
 								e += dx;
 							}
-							p1.x += 1;
+							p1.x -= 1;
 						}
 					}
 					else
 					{
-						//printf("Step 21\n");
-
 						e = dy;
 						dy = dy * 2;
 						dx = dx * 2;
 						while ((int)p1.y != (int)p2.y)
 						{
-						//printf("Step 22\n");
-							draw_pixel(w, p1);
+							draw_pixel(w, p1, 0);
 							e += dx;
 							if (e <= 0)
 							{
@@ -181,7 +166,7 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 						dy = dy * 2;
 						while ((int)p1.x != (int)p2.x)
 						{
-							draw_pixel(w, p1);
+							draw_pixel(w, p1, 0);
 							e -= dy;
 							if (e >= 0)
 							{
@@ -198,7 +183,7 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 						dy = dy * 2;
 						while ((int)p1.y != (int)p2.y)
 						{
-							draw_pixel(w, p1);
+							draw_pixel(w, p1, 0);
 							e -= dx;
 							if (e >= 0)
 							{
@@ -212,13 +197,9 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 			}
 			else
 			{
-						printf("Step 29\n");
-
 				while ((int)p1.x != (int)p2.x)
 				{
-						printf("Step 30\n");
-
-					draw_pixel(w, p1);
+					draw_pixel(w, p1, 0);
 					p1.x -= 1;
 				}
 			}
@@ -226,33 +207,22 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 	}
 	else
 	{
-						printf("Step 31\n");
-
+		printf("dx = 0\n");
 		if (dy != 0)
 		{
-						printf("Step 32\n");
-
 			if (dy > 0)
 			{
-						printf("Step 33\n");
-
  				while ((int)p1.y != (int)p2.y)
 				{
-						printf("Step 34\n");
-
-					draw_pixel(w, p1);
+					draw_pixel(w, p1, 0);
 					p1.y += 1;
 				}
 			}
 			else
 			{
-						printf("Step 35\n");
-
 				while ((int)p1.y != (int)p2.y)
 				{
-						printf("Step 36\n");
-
-					draw_pixel(w, p1);
+					draw_pixel(w, p1, 0);
 					p1.y -= 1;
 				}
 			}
