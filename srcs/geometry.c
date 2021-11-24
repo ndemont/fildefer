@@ -10,7 +10,7 @@ void	fill_window(t_wireframe *w)
 	while (y < w->y_len)
 	{
 		x = 0;
-		while (x < w->y_len)
+		while (x < w->x_len)
 		{
 			if (w->map[y][x].x >= 0 && w->map[y][x].x < WIDTH && w->map[y][x].y >= 0 && w->map[y][x].y < HEIGHT)
 			{

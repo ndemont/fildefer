@@ -115,12 +115,10 @@ void	zoom_map(t_wireframe *w, float zoom)
 	while (y < w->y_len)
 	{
 		x = 0;
-		while (x < w->x_len)
+		while (x < (int)w->x_len)
 		{
-			//printf("X = %f | Y = %f\n", w->map[y][x].x, w->map[y][x].y);
 			w->map[y][x].x *= zoom;
 			w->map[y][x].y *= zoom;
-			//printf("X = %f | Y = %f\n\n", w->map[y][x].x, w->map[y][x].y);
 			update_limits(w, w->map[y][x].x, w->map[y][x].y);
 			x++;
 		}
