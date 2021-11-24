@@ -15,7 +15,7 @@ void	debug(t_wireframe *w)
 		x = 0;
 		while (x < w->x_len)
 		{
-			//printf("x = %f | y = %f | z = %f\n", w->map[y][x].x, w->map[y][x].y, w->map[y][x].z);
+			printf("x = %f | y = %f | z = %f\n", w->map[y][x].x, w->map[y][x].y, w->map[y][x].z);
 			x++;
 		}
 		printf("\n");
