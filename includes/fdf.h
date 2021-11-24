@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:39:26 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/23 20:02:09 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/24 11:08:44 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@
 #  define FILTER 0x03
 #  define ESC 0x35
 #endif
-
 
 typedef struct		s_img
 {
@@ -157,9 +156,15 @@ void	zoom(t_wireframe*w, int	zoom);
 void	update_limits(t_wireframe *w, float x, float y);
 float	set_zoom(t_wireframe *w);
 /* ************************************************************************** */
-/*                           Window Settings                                     */
+/*                           Window Settings                                  */
 /* ************************************************************************** */
 
 void	fill_window(t_wireframe *w);
+
+/* ************************************************************************** */
+/*                           Debug                                            */
+/* ************************************************************************** */
+void	debug(t_wireframe *w);
+
 
 #endif

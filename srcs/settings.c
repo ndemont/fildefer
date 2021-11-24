@@ -1,5 +1,14 @@
 #include "fdf.h"
 
+void	set_map(t_wireframe *w)
+{
+	float zoom;
+
+	zoom = set_zoom(w);
+	zoom_map(w, zoom);
+
+}
+
 void	move_x(t_wireframe *w, int shift)
 {
 	int x;
@@ -89,10 +98,8 @@ float	set_zoom(t_wireframe *w)
 	float	x_coef;
 	float	y_coef;
 
-	x_coef = (WIDTH - 50) / (w->x_max - w->x_min);
-	y_coef = (WIDTH - 50) / (w->y_max - w->y_min);
-	printf("coef x %f\n", x_coef);
-	printf("coef y %f\n", y_coef);
+	x_coef = (WIDTH - 50.0) / (w->x_max - w->x_min);
+	y_coef = (WIDTH - 50.0) / (w->y_max - w->y_min);
 	if (x_coef < y_coef)
 		return (x_coef);
 	else
@@ -110,8 +117,10 @@ void	zoom_map(t_wireframe *w, float zoom)
 		x = 0;
 		while (x < w->x_len)
 		{
+			//printf("X = %f | Y = %f\n", w->map[y][x].x, w->map[y][x].y);
 			w->map[y][x].x *= zoom;
 			w->map[y][x].y *= zoom;
+			//printf("X = %f | Y = %f\n\n", w->map[y][x].x, w->map[y][x].y);
 			update_limits(w, w->map[y][x].x, w->map[y][x].y);
 			x++;
 		}

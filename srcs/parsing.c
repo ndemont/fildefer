@@ -34,17 +34,27 @@ int	get_dimensions(char *file, t_wireframe *wireframe)
 			return (0);
 		}
 		i = 0;
-		while (line[i])
+		if (!wireframe->x_len)
 		{
-			while (line[i] && line[i] != ' ')
+			while (line[i])
+			{
+				if (line[i] > 32 && line[i] < 127)
+				{
+					wireframe->x_len++;
+					while (line[i] > 32 && line[i] < 127)
+						i++;
+				}
 				i++;
-			wireframe->x_len++;
-			i++;
+			}
 		}
 		wireframe->y_len++;
 		free(line);
 	}
+	wireframe->y_len--;
+	printf("x len = %f\n", wireframe->x_len);
+	printf("y len = %f\n", wireframe->y_len);
 	close(fd);
+
 	return (1);
 }
 
@@ -74,8 +84,10 @@ int	fill_map(t_wireframe* w, char *line, int y)
 	while (line[i])
 	{
 		w->map[y][x].z = (float)ft_atoi(&line[i]);
-		w->map[y][x].x = (sqrtf(2.0) / 2.0) * (x - y);
-		w->map[y][x].y = (sqrtf(2.0 / 3.0) * w->map[y][x].z) - (((-1.0) / sqrtf(6.0)) * (x + y));
+		//printf("X = %d | Y = %d | Z = %f\n", x, y, w->map[y][x].z);
+		w->map[y][x].x = (float)(sqrtf(2.0) / 2.0) * ((float)x - (float)y);
+		w->map[y][x].y = (float)(sqrtf(2.0 / 3.0) * w->map[y][x].z) - (((-1.0) / sqrtf(6.0)) * ((float)x + (float)y));
+		//printf("X = %f | Y = %f | Z = %f\n", w->map[y][x].x, w->map[y][x].y, w->map[y][x].z);
 		update_limits(w, w->map[y][x].x, w->map[y][x].y);
 		while (line[i] && line[i] != ' ')
 			i++;
@@ -89,6 +101,7 @@ int	fill_map(t_wireframe* w, char *line, int y)
 
 int	read_file(char *file, t_wireframe *w)
 {
+	static int turn = 0;
 	char	*line;
 	int		fd;
 	int		y;
@@ -128,13 +141,16 @@ int	parsing(char *file, t_wireframe *wireframe)
 	init_wireframe(wireframe);
 	if (!(get_dimensions(file, wireframe)))
 	{
+		printf("Wrong Dimensions\n");
 		free_wireframe(wireframe, 79);
 		return (0);
 	}
 	if (!read_file(file, wireframe))
 	{
+		printf("Wrong Reading\n");
 		free_wireframe(wireframe, 79);
 		return (0);
 	}
+	debug(wireframe);
 	return (1);
 }
