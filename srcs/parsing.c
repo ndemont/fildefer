@@ -54,7 +54,6 @@ int	get_dimensions(char *file, t_wireframe *wireframe)
 	printf("x len = %f\n", wireframe->x_len);
 	printf("y len = %f\n", wireframe->y_len);
 	close(fd);
-
 	return (1);
 }
 

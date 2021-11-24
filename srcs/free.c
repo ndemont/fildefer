@@ -5,20 +5,16 @@ t_wireframe	*free_wireframe(t_wireframe *wireframe, int errno)
 	int i;
 
 	print_error(errno);
-	if (wireframe)
+	if (wireframe->map)
 	{
-		if (wireframe->map)
+		i = 0;
+		while (i < wireframe->y_len)
 		{
-			i = 0;
-			while (i < wireframe->y_len)
-			{
-				free(wireframe->map[i]);
-				wireframe->map[i] = NULL;
-				i++;
-			}
+			free(wireframe->map[i]);
+			wireframe->map[i] = NULL;
+			i++;
 		}
-		free(wireframe);
-		wireframe = NULL;
+		free(wireframe->map);
 	}
 	return (NULL);
 }
