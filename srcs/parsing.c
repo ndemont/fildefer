@@ -89,8 +89,7 @@ int	fill_map(t_wireframe* w, char *line, int y)
 		{
 			w->map[y][x].z = (float)ft_atoi(&line[i]);
 			w->map[y][x].x = (float)(sqrtf(2.0) / 2.0) * ((float)x - (float)y);
-			w->map[y][x].y = (float)(sqrtf(2.0 / 3.0) * (- w->map[y][x].z)) - (((-1.0) / sqrtf(6.0)) * ((float)x + (float)y));
-			w->map[y][x].y = (float)(sqrtf(2.0 / 3.0) * (w->map[y][x].z)) - (((-1.0) / sqrtf(6.0)) * ((float)x + (float)y));
+			w->map[y][x].y = (float)(sqrtf(2.0 / 3.0) * (w->map[y][x].z * 0.1)) - (((-1.0) / sqrtf(6.0)) * ((float)x + (float)y));
 			update_limits(w, w->map[y][x].x, w->map[y][x].y);
 			x++;
 			while (line && line[i] > 32 && line[i] < 127)

@@ -13,6 +13,253 @@ void	draw_pixel(t_wireframe *w, t_point	p, char	*s)
 	w->window.data_addr[w->pixel.p + 0] = w->pixel.b;
 }
 
+
+
+void	first_octant(t_wireframe *w, t_point p1, t_point p2)
+{
+	int		dx;
+	int		dy;
+	float	e;
+
+	dx = (int)p2.x - (int)p1.x;
+	dy = (int)p2.y - (int)p1.y;
+	e = dx;
+	dx = dx * 2 ;
+	dy = dy * 2 ;
+	while ((int)p1.x != (int)p2.x)
+	{
+		draw_pixel(w, p1, 0);
+		e -= dy;
+		if (e < 0)
+		{
+			p1.y += 1;
+			e += dx;
+		}
+		p1.x += 1;
+	}
+}
+
+void	second_octant(t_wireframe *w, t_point p1, t_point p2)
+{
+	int		dx;
+	int		dy;
+	float	e;
+
+	dx = (int)p2.x - (int)p1.x;
+	dy = (int)p2.y - (int)p1.y;
+	e = dy;
+	dy = dy * 2;
+	dx = dx * 2;
+	while ((int)p1.y != (int)p2.y)
+	{
+		draw_pixel(w, p1, 0);
+		e -= dx;
+		if (e < 0)
+		{
+			p1.x += 1;
+			e += dy;
+		}
+		p1.y += 1;
+	}
+}
+
+void	eighth_octant(t_wireframe *w, t_point p1, t_point p2)
+{
+	int		dx;
+	int		dy;
+	float	e;
+
+	dx = (int)p2.x - (int)p1.x;
+	dy = (int)p2.y - (int)p1.y;
+	e = dx;
+	dx = dx * 2;
+	dy = dy * 2;
+	while ((int)p1.x != (int)p2.x)
+	{
+		draw_pixel(w, p1, 0);
+		e += dy;
+		if (e < 0)
+		{
+			p1.y -= 1;
+			e += dx;
+		}
+		p1.x += 1;
+	}
+}
+
+void	seventh_octant(t_wireframe *w, t_point p1, t_point p2)
+{
+	int		dx;
+	int		dy;
+	float	e;
+
+	dx = (int)p2.x - (int)p1.x;
+	dy = (int)p2.y - (int)p1.y;
+	e = dy;
+	dy = dy * 2;
+	dx = dx * 2;
+	while ((int)p1.y != (int)p2.y)
+	{
+		draw_pixel(w, p1, 0);
+		e += dx;
+		if (e > 0)
+		{
+			p1.x += 1;
+			e += dy;
+		}
+		p1.y -= 1;
+	}
+}
+
+void	forth_octant(t_wireframe *w, t_point p1, t_point p2)
+{
+	int		dx;
+	int		dy;
+	float	e;
+
+	dx = (int)p2.x - (int)p1.x;
+	dy = (int)p2.y - (int)p1.y;
+	e = dx;
+	dy = dy * 2;
+	dx = dx * 2;
+	while ((int)p1.x != (int)p2.x)
+	{
+		draw_pixel(w, p1, 0);
+		e += dy;
+		if (e >= 0)
+		{
+			p1.y += 1;
+			e += dx;
+		}
+		p1.x -= 1;
+	}
+}
+
+void	third_octant(t_wireframe *w, t_point p1, t_point p2)
+{
+	int		dx;
+	int		dy;
+	float	e;
+
+	dx = (int)p2.x - (int)p1.x;
+	dy = (int)p2.y - (int)p1.y;
+	e = dy;
+	dy = dy * 2;
+	dx = dx * 2;
+	while ((int)p1.y != (int)p2.y)
+	{
+		draw_pixel(w, p1, 0);
+		e += dx;
+		if (e <= 0)
+		{
+			p1.x -= 1;
+			e += dy;
+		}
+		p1.y += 1;
+	}
+}
+
+void	fifth_octant(t_wireframe *w, t_point p1, t_point p2)
+{
+	int		dx;
+	int		dy;
+	float	e;
+
+	dx = (int)p2.x - (int)p1.x;
+	dy = (int)p2.y - (int)p1.y;
+	e = dx;
+	dx = dx * 2;
+	dy = dy * 2;
+	while ((int)p1.x != (int)p2.x)
+	{
+		draw_pixel(w, p1, 0);
+		e -= dy;
+		if (e >= 0)
+		{
+			p1.y -= 1;
+			e += dx;
+		}
+		p1.x -= 1;
+	}
+}
+
+void	sixth_octant(t_wireframe *w, t_point p1, t_point p2)
+{
+	int		dx;
+	int		dy;
+	float	e;
+
+	dx = (int)p2.x - (int)p1.x;
+	dy = (int)p2.y - (int)p1.y;
+	e = dy;
+	dx = dx * 2;
+	dy = dy * 2;
+	while ((int)p1.y != (int)p2.y)
+	{
+		draw_pixel(w, p1, 0);
+		e -= dx;
+		if (e >= 0)
+		{
+			p1.x -= 1;
+			e += dy;
+		}
+		p1.y -= 1;
+	}
+}
+
+
+void	first_dial(t_wireframe *w, t_point p1, t_point p2)
+{
+	int		dx;
+	int		dy;
+
+	dx = (int)p2.x - (int)p1.x;
+	dy = (int)p2.y - (int)p1.y;
+	if (dx >= dy)
+		first_octant(w, p1, p2);
+	else
+		second_octant(w, p1, p2);
+}
+
+void	second_dial(t_wireframe *w, t_point p1, t_point p2)
+{
+	int		dx;
+	int		dy;
+
+	dx = (int)p2.x - (int)p1.x;
+	dy = (int)p2.y - (int)p1.y;
+	if (-dx >= dy)
+		forth_octant(w, p1, p2);
+	else
+		third_octant(w, p1, p2);
+}
+
+void	third_dial(t_wireframe *w, t_point p1, t_point p2)
+{
+	int		dx;
+	int		dy;
+
+	dx = (int)p2.x - (int)p1.x;
+	dy = (int)p2.y - (int)p1.y;
+	if (dx <= dy)
+		fifth_octant(w, p1, p2);
+	else
+		sixth_octant(w, p1, p2);
+}
+
+void	forth_dial(t_wireframe *w, t_point p1, t_point p2)
+{
+	int		dx;
+	int		dy;
+
+	dx = (int)p2.x - (int)p1.x;
+	dy = (int)p2.y - (int)p1.y;
+	if (dx >= -dy)
+		eighth_octant(w, p1, p2);
+	else
+		seventh_octant(w, p1, p2);
+}
+
 void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 {
 	int		dx;
@@ -23,84 +270,14 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 	dy = (int)p2.y - (int)p1.y;
 	if (dx != 0)
 	{
-		if (dx > 0)
+		if (dx > 0) 
 		{
 			if (dy != 0)
 			{
 				if (dy > 0)
-				{
-					if (dx >= dy)
-					{
-						e = dx;
-						dx = dx * 2 ;
-						dy = dy * 2 ;
-						while ((int)p1.x != (int)p2.x)
-						{
-							draw_pixel(w, p1, 0);
-							e -= dy;
-							if (e < 0)
-							{
-								p1.y += 1;
-								e += dx;
-							}
-							p1.x += 1;
-						}
-					}
-					else
-					{
-						e = dy;
-						dy = dy * 2;
-						dx = dx * 2;
-						while ((int)p1.y != (int)p2.y)
-						{
-							draw_pixel(w, p1, 0);
-							e -= dx;
-							if (e < 0)
-							{
-								p1.x += 1;
-								e += dy;
-							}
-							p1.y += 1;
-						}
-					}
-				}
-				else // dy < 0 (et dx > 0)
-				{
-					if (dx >= -dy)
-					{
-						e = dx;
-						dx = dx * 2;
-						dy = dy * 2;
-						while ((int)p1.x != (int)p2.x)
-						{
-							draw_pixel(w, p1, 0);
-							e += dy;
-							if (e < 0)
-							{
-								p1.y -= 1;
-								e += dx;
-							}
-							p1.x += 1;
-						}
-					}
-					else
-					{
-						e = dy;
-						dy = dy * 2;
-						dx = dx * 2;
-						while ((int)p1.y != (int)p2.y)
-						{
-							draw_pixel(w, p1, 0);
-							e += dx;
-							if (e > 0)
-							{
-								p1.x += 1;
-								e += dy;
-							}
-							p1.y -= 1;
-						}
-					}
-				}
+					first_dial(w, p1, p2);
+				else
+					forth_dial(w, p1, p2);
 			}
 			else
 			{
@@ -116,79 +293,9 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 			if (dy != 0)
 			{
 				if (dy > 0)
-				{
-					if (-dx >= dy)
-					{
-						e = dx;
-						dy = dy * 2;
-						dx = dx * 2;
-						while ((int)p1.x != (int)p2.x)
-						{
-							draw_pixel(w, p1, 0);
-							e += dy;
-							if (e >= 0)
-							{
-								p1.y += 1;
-								e += dx;
-							}
-							p1.x -= 1;
-						}
-					}
-					else
-					{
-						e = dy;
-						dy = dy * 2;
-						dx = dx * 2;
-						while ((int)p1.y != (int)p2.y)
-						{
-							draw_pixel(w, p1, 0);
-							e += dx;
-							if (e <= 0)
-							{
-								p1.x -= 1;
-								e += dy;
-							}
-							p1.y += 1;
-						}
-					}
-				}
+					second_dial(w, p1, p2);
 				else
-				{
-					if (dx <= dy)
-					{
-						e = dx;
-						dx = dx * 2;
-						dy = dy * 2;
-						while ((int)p1.x != (int)p2.x)
-						{
-							draw_pixel(w, p1, 0);
-							e -= dy;
-							if (e >= 0)
-							{
-								p1.y -= 1;
-								e += dx;
-							}
-							p1.x -= 1;
-						}
-					}
-					else
-					{
-						e = dy;
-						dx = dx * 2;
-						dy = dy * 2;
-						while ((int)p1.y != (int)p2.y)
-						{
-							draw_pixel(w, p1, 0);
-							e -= dx;
-							if (e >= 0)
-							{
-								p1.x -= 1;
-								e += dy;
-							}
-							p1.y -= 1;
-						}
-					}
-				}
+					third_dial(w, p1, p2);
 			}
 			else
 			{
