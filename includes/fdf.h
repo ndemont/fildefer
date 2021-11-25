@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:39:26 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/24 11:08:44 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/25 12:00:20 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,13 @@
 #  define ESC 0x35
 #endif
 
-typedef struct		s_img
+typedef struct	s_pixel
 {
-	void			*img_ptr;
-	unsigned char	*data_addr;
-}					t_img;
-
-typedef struct		s_pixel
-{
-	int				p;
-	char			r;
-	char			g;
-	char			b;
-}					t_pixel;
+	int			p;
+	char		r;
+	char		g;
+	char		b;
+}				t_pixel;
 
 typedef struct	s_point
 {
@@ -68,26 +62,6 @@ typedef struct	s_point
 	float	y;
 	float	z;
 }				t_point;
-
-typedef struct		s_matrix
-{
-	t_point		r1;
-	t_point		r2;
-	t_point		r3;
-	t_point		r4;
-}					t_matrix;
-
-typedef struct s_ray
-{
-	t_point	origin;
-	t_point	direction;
-}				t_ray;
-
-typedef struct	s_wire
-{
-	t_point	start;
-	t_point	end;
-}				t_wire;
 
 typedef struct	s_window
 {
@@ -119,21 +93,21 @@ int			parsing(char *file, t_wireframe *wireframe);
 t_wireframe	*free_wireframe(t_wireframe *wireframe, int errno);
 void		print_error(int errno);
 
-void	fill_window(t_wireframe *wireframe);
-int		ft_close_win(int keycode, t_wireframe *s);
-int		ft_event(int keycode, t_wireframe *w);
-int		ft_cross(int keycode, t_wireframe *s);
+void		fill_window(t_wireframe *wireframe);
+int			ft_close_win(int keycode, t_wireframe *s);
+int			ft_event(int keycode, t_wireframe *w);
+int			ft_cross(int keycode, t_wireframe *s);
 
-void	display_window(t_wireframe *wireframe);
-void	ft_move_cam(int keycode, t_wireframe *w);
+void		display_window(t_wireframe *wireframe);
+void		ft_move_cam(int keycode, t_wireframe *w);
 
-void	print_z(t_wireframe *w);
-void	color_pixel(t_wireframe *wireframe, float altitude);
-void	draw_wire(t_wireframe *w, t_point p1, t_point p2);
+void		print_z(t_wireframe *w);
+void		color_pixel(t_wireframe *wireframe, float altitude);
+void		draw_wire(t_wireframe *w, t_point p1, t_point p2);
 
-void	move_y(t_wireframe *w, int shift);
-void	move_x(t_wireframe *w, int shift);
-void	fill_window2(t_wireframe *w);
+void		move_y(t_wireframe *w, int shift);
+void		move_x(t_wireframe *w, int shift);
+void		fill_window2(t_wireframe *w);
 
 /* ************************************************************************** */
 /*                           Initialization                                   */

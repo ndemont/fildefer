@@ -2,8 +2,7 @@
 
 void	draw_pixel(t_wireframe *w, t_point	p, char	*s)
 {
-	if (s)
-		printf("%s\n", s);
+
 	w->pixel.r = (char)255;
 	w->pixel.g = (char)255;
 	w->pixel.b = (char)255;
@@ -47,9 +46,8 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 							p1.x += 1;
 						}
 					}
-					else // vecteur oblique proche de la verticale, dans le 2d octant
+					else
 					{
-						// printf("ici\n");
 						e = dy;
 						dy = dy * 2;
 						dx = dx * 2;
@@ -70,13 +68,11 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 				{
 					if (dx >= -dy)
 					{
-						//printf("Step 10\n");
 						e = dx;
 						dx = dx * 2;
 						dy = dy * 2;
 						while ((int)p1.x != (int)p2.x)
 						{
-						//printf("Step 11\n");
 							draw_pixel(w, p1, 0);
 							e += dy;
 							if (e < 0)
@@ -89,7 +85,6 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 					}
 					else
 					{
-						//printf("Step 12\n");
 						e = dy;
 						dy = dy * 2;
 						dx = dx * 2;
@@ -150,7 +145,7 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 							e += dx;
 							if (e <= 0)
 							{
-								p1.x += 1;
+								p1.x -= 1;
 								e += dy;
 							}
 							p1.y += 1;
@@ -207,7 +202,6 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 	}
 	else
 	{
-		printf("dx = 0\n");
 		if (dy != 0)
 		{
 			if (dy > 0)
