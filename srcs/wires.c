@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 12:28:17 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/26 12:59:58 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/26 14:17:18 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 
 void	draw_pixel(t_wireframe *w, t_point p1, t_point pt, t_point p2)
 {
-	w->pixel.r = (char)255;
-	w->pixel.g = (char)255;
-	w->pixel.b = (char)255;
-	color_pixel(w, p1.z);
-	w->pixel.p = ((HEIGHT - ((int)p1.y)) * w->window.size) + ((WIDTH - ((int)p1.x)) * 4);
+	color_pixel(w, pt.z);
+	w->pixel.p = ((HEIGHT - ((int)pt.y)) * w->window.size) + ((WIDTH - ((int)pt.x)) * 4);
 	w->window.data_addr[w->pixel.p + 2] = w->pixel.r;
 	w->window.data_addr[w->pixel.p + 1] = w->pixel.g;
 	w->window.data_addr[w->pixel.p + 0] = w->pixel.b;
@@ -26,193 +23,209 @@ void	draw_pixel(t_wireframe *w, t_point p1, t_point pt, t_point p2)
 
 void	first_octant(t_wireframe *w, t_point p1, t_point p2)
 {
+	t_point	pt;
 	int		dx;
 	int		dy;
 	float	e;
 
 	dx = (int)p2.x - (int)p1.x;
 	dy = (int)p2.y - (int)p1.y;
+	pt = p1;
 	e = dx;
 	dx = dx * 2 ;
 	dy = dy * 2 ;
-	while ((int)p1.x != (int)p2.x)
+	while ((int)pt.x != (int)p2.x)
 	{
-		draw_pixel(w, p1, p1, p1);
+		draw_pixel(w, p1, pt, p2);
 		e -= dy;
 		if (e < 0)
 		{
-			p1.y += 1;
+			pt.y += 1;
 			e += dx;
 		}
-		p1.x += 1;
+		pt.x += 1;
 	}
 }
 
 void	second_octant(t_wireframe *w, t_point p1, t_point p2)
 {
+	t_point	pt;
 	int		dx;
 	int		dy;
 	float	e;
 
+	pt = p1;
 	dx = (int)p2.x - (int)p1.x;
 	dy = (int)p2.y - (int)p1.y;
 	e = dy;
 	dy = dy * 2;
 	dx = dx * 2;
-	while ((int)p1.y != (int)p2.y)
+	while ((int)pt.y != (int)p2.y)
 	{
-		draw_pixel(w, p1, p1, p1);
+		draw_pixel(w, p1, pt, p2);
 		e -= dx;
 		if (e < 0)
 		{
-			p1.x += 1;
+			pt.x += 1;
 			e += dy;
 		}
-		p1.y += 1;
+		pt.y += 1;
 	}
 }
 
 void	eighth_octant(t_wireframe *w, t_point p1, t_point p2)
 {
+	t_point	pt;
 	int		dx;
 	int		dy;
 	float	e;
 
+	pt = p1;
 	dx = (int)p2.x - (int)p1.x;
 	dy = (int)p2.y - (int)p1.y;
 	e = dx;
 	dx = dx * 2;
 	dy = dy * 2;
-	while ((int)p1.x != (int)p2.x)
+	while ((int)pt.x != (int)p2.x)
 	{
-		draw_pixel(w, p1, p1, p1);
+		draw_pixel(w, p1, pt, p2);
 		e += dy;
 		if (e < 0)
 		{
-			p1.y -= 1;
+			pt.y -= 1;
 			e += dx;
 		}
-		p1.x += 1;
+		pt.x += 1;
 	}
 }
 
 void	seventh_octant(t_wireframe *w, t_point p1, t_point p2)
 {
+	t_point	pt;
 	int		dx;
 	int		dy;
 	float	e;
 
+	pt = p1;
 	dx = (int)p2.x - (int)p1.x;
 	dy = (int)p2.y - (int)p1.y;
 	e = dy;
 	dy = dy * 2;
 	dx = dx * 2;
-	while ((int)p1.y != (int)p2.y)
+	while ((int)pt.y != (int)p2.y)
 	{
-		draw_pixel(w, p1, p1, p1);
+		draw_pixel(w, p1, pt, p2);
 		e += dx;
 		if (e > 0)
 		{
-			p1.x += 1;
+			pt.x += 1;
 			e += dy;
 		}
-		p1.y -= 1;
+		pt.y -= 1;
 	}
 }
 
 void	forth_octant(t_wireframe *w, t_point p1, t_point p2)
 {
+	t_point pt;
 	int		dx;
 	int		dy;
 	float	e;
 
+	pt = p1;
 	dx = (int)p2.x - (int)p1.x;
 	dy = (int)p2.y - (int)p1.y;
 	e = dx;
 	dy = dy * 2;
 	dx = dx * 2;
-	while ((int)p1.x != (int)p2.x)
+	while ((int)pt.x != (int)p2.x)
 	{
-		draw_pixel(w, p1, p1, p1);
+		draw_pixel(w, p1, pt, p2);
 		e += dy;
 		if (e >= 0)
 		{
-			p1.y += 1;
+			pt.y += 1;
 			e += dx;
 		}
-		p1.x -= 1;
+		pt.x -= 1;
 	}
 }
 
 void	third_octant(t_wireframe *w, t_point p1, t_point p2)
 {
+	t_point	pt;
 	int		dx;
 	int		dy;
 	float	e;
 
+	pt = p1;
 	dx = (int)p2.x - (int)p1.x;
 	dy = (int)p2.y - (int)p1.y;
 	e = dy;
 	dy = dy * 2;
 	dx = dx * 2;
-	while ((int)p1.y != (int)p2.y)
+	while ((int)pt.y != (int)p2.y)
 	{
-		draw_pixel(w, p1, p1, p1);
+		draw_pixel(w, p1, pt, p2);
 		e += dx;
 		if (e <= 0)
 		{
-			p1.x -= 1;
+			pt.x -= 1;
 			e += dy;
 		}
-		p1.y += 1;
+		pt.y += 1;
 	}
 }
 
 void	fifth_octant(t_wireframe *w, t_point p1, t_point p2)
 {
+	t_point	pt;
 	int		dx;
 	int		dy;
 	float	e;
 
+	pt = p1;
 	dx = (int)p2.x - (int)p1.x;
 	dy = (int)p2.y - (int)p1.y;
 	e = dx;
 	dx = dx * 2;
 	dy = dy * 2;
-	while ((int)p1.x != (int)p2.x)
+	while ((int)pt.x != (int)p2.x)
 	{
-		draw_pixel(w, p1, p1, p1);
+		draw_pixel(w, p1, pt, p2);
 		e -= dy;
 		if (e >= 0)
 		{
-			p1.y -= 1;
+			pt.y -= 1;
 			e += dx;
 		}
-		p1.x -= 1;
+		pt.x -= 1;
 	}
 }
 
 void	sixth_octant(t_wireframe *w, t_point p1, t_point p2)
 {
+	t_point	pt;
 	int		dx;
 	int		dy;
 	float	e;
 
+	pt = p1;
 	dx = (int)p2.x - (int)p1.x;
 	dy = (int)p2.y - (int)p1.y;
 	e = dy;
 	dx = dx * 2;
 	dy = dy * 2;
-	while ((int)p1.y != (int)p2.y)
+	while ((int)pt.y != (int)p2.y)
 	{
-		draw_pixel(w, p1, p1, p1);
+		draw_pixel(w, p1, pt, p2);
 		e -= dx;
 		if (e >= 0)
 		{
-			p1.x -= 1;
+			pt.x -= 1;
 			e += dy;
 		}
-		p1.y -= 1;
+		pt.y -= 1;
 	}
 }
 
@@ -290,7 +303,6 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 {
 	int		dx;
 	int		dy;
-	t_point	pt;
 
 	dx = (int)p2.x - (int)p1.x;
 	dy = (int)p2.y - (int)p1.y;
