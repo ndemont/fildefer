@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:39:26 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/26 12:51:46 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/26 17:39:48 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ typedef struct	s_window
 	void			*mlx_ptr;
 	void			*win_ptr;
 	void			*img_ptr;
-	unsigned char	*data_addr;
+	char			*data_addr;
 }				t_window;
 
 typedef struct	s_wireframe
@@ -100,7 +100,9 @@ void		display_window(t_wireframe *wireframe);
 void		ft_move_cam(int keycode, t_wireframe *w);
 
 void		print_z(t_wireframe *w);
-void		color_pixel(t_wireframe *wireframe, float altitude);
+void		color_pixel(t_wireframe *w,  t_point p1, t_point pt, t_point p2, float ratio);
+
+// void		color_pixel(t_wireframe *wireframe, t_point pt, t_point p2, float ratio);
 void		draw_wire(t_wireframe *w, t_point p1, t_point p2);
 
 void		move_y(t_wireframe *w, int shift);

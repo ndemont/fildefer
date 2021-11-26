@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 12:20:21 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/26 12:46:51 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/26 15:21:12 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	init_window(t_window *window)
 	window->bits_per_pixel = 0;
 	window->win_ptr = mlx_new_window(window->mlx_ptr, WIDTH, HEIGHT, "fdf");
 	window->img_ptr = mlx_new_image(window->mlx_ptr, WIDTH, HEIGHT);
-	window->data_addr = (unsigned char *)mlx_get_data_addr(window->img_ptr,
+	window->data_addr = mlx_get_data_addr(window->img_ptr,
 			&(window->bits_per_pixel), &(window->size), &(window->endian));
 }
 

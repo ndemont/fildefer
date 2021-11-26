@@ -1,51 +1,68 @@
 #include "fdf.h"
 
-void		color_pixel(t_wireframe *wireframe, float altitude)
+void		color_pixel(t_wireframe *w,  t_point p1, t_point pt, t_point p2, float ratio)
 {
 	float	scale;
 	float	coef;
-	float	diff;
-	float	limit;
-	float	level;
-	float	z_min;
-	float	z_max;
+	float	diff_total;
+	float	diff_to_zero;
+	float	diff_to_quarter;
+	float	limit_min;
+	float	limit_max;
+	float	quarter;
+	char	*str;
 
-	z_min = 0;
-	z_max = 10;
-	diff = z_max - z_min;
-	level = altitude + diff;
-	scale = diff / 4;
-	if (altitude < (z_min + scale))
+	limit_min = 0;
+	limit_max = 0.2;
+	pt.z = p1.z + (ratio * (p2.z - p1.z));
+	printf("z = %f	| ", pt.z);
+	diff_to_zero = 0 - w->min.z;
+	diff_total = w->max.z - w->min.z;
+	pt.z += diff_to_zero;
+	quarter = pt.z / (w->max.z + diff_to_zero);
+	str = &w->window.data_addr[w->pixel.p];
+	*(unsigned int *)str = 0xFF0000;
+	while (limit_max < quarter)
 	{
-		limit = z_min + (scale * 4) + diff;
-		coef = (limit * level) / 100;
-		wireframe->pixel.r = (char)0;
-		wireframe->pixel.g = (char)(255 * (1 - coef));
-		wireframe->pixel.g = (char)255;
+		limit_min += 0.2;
+		limit_max += 0.2;
+	}
+	// printf("coef sur 1 = %f	| ", quarter);
+	if (quarter < 0.2)
+	{
+		quarter = quarter / 0.2;
+		*(unsigned int *)str = 0x0000FF + (0xFF0000 * (1 - quarter));
+		printf("color = %x\n", *str);
 
 	}
-	else if (altitude < (z_min + scale * 2))
+	else if (quarter < 0.4)
 	{
-		limit = z_min + (scale * 3) + diff;
-		coef = (limit * level) / 100;
-		wireframe->pixel.r = (char)0;
-		wireframe->pixel.g = (char)255;
-		wireframe->pixel.g = (char)(255 * coef);
+		quarter = (quarter - 0.2) / 0.2;
+		*(unsigned int *)str = 0x0000FF - (0x00FF00 * (quarter));
+		printf("color = %x\n", *str);
+
+
 	}
-	else if (altitude < (z_min + scale * 3))
+	else if (quarter < 0.6)
 	{
-		limit = z_min + (scale * 2) + diff;
-		coef = (limit * level) / 100;
-		wireframe->pixel.r = (char)(255 * (1 - coef));
-		wireframe->pixel.g = (char)255;
-		wireframe->pixel.g = (char)0;
+		quarter = (quarter - 0.4) / 0.2;
+		*(unsigned int *)str = 0x00FF00 + (0x0000FF * (1 -quarter));
+		printf("color = %x\n", *str);
+
+
+	}
+	else if (quarter < 0.8)
+	{
+		quarter = (quarter - 0.6) / 0.2;
+		*(unsigned int *)str = 0x00FF00 - (0xFF0000 * (quarter));
+		printf("color = %x\n", *str);
+
 	}
 	else
 	{
-		limit = z_min + scale + diff;
-		coef = (limit * level) / 100;
-		wireframe->pixel.r = (char)255;
-		wireframe->pixel.g = (char)(255 * coef);
-		wireframe->pixel.b = (char)0;
+		quarter = (quarter - 0.8) / 0.2;
+		*(unsigned int *)str = 0xFF0000 + (0x00FF00 * (1 - quarter));
+		printf("color = %x\n", *str);
+
 	}
 }
