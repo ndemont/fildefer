@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_wire.c                                        :+:      :+:    :+:   */
+/*   wires.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 12:28:17 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/26 12:29:30 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/26 12:59:58 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	draw_pixel(t_wireframe *w, t_point	p, char	*s)
+void	draw_pixel(t_wireframe *w, t_point p1, t_point pt, t_point p2)
 {
 	w->pixel.r = (char)255;
 	w->pixel.g = (char)255;
 	w->pixel.b = (char)255;
-	color_pixel(w, p.z);
-	w->pixel.p = ((HEIGHT - ((int)p.y)) * w->window.size) + ((WIDTH - ((int)p.x)) * 4);
+	color_pixel(w, p1.z);
+	w->pixel.p = ((HEIGHT - ((int)p1.y)) * w->window.size) + ((WIDTH - ((int)p1.x)) * 4);
 	w->window.data_addr[w->pixel.p + 2] = w->pixel.r;
 	w->window.data_addr[w->pixel.p + 1] = w->pixel.g;
 	w->window.data_addr[w->pixel.p + 0] = w->pixel.b;
@@ -37,7 +37,7 @@ void	first_octant(t_wireframe *w, t_point p1, t_point p2)
 	dy = dy * 2 ;
 	while ((int)p1.x != (int)p2.x)
 	{
-		draw_pixel(w, p1, 0);
+		draw_pixel(w, p1, p1, p1);
 		e -= dy;
 		if (e < 0)
 		{
@@ -61,7 +61,7 @@ void	second_octant(t_wireframe *w, t_point p1, t_point p2)
 	dx = dx * 2;
 	while ((int)p1.y != (int)p2.y)
 	{
-		draw_pixel(w, p1, 0);
+		draw_pixel(w, p1, p1, p1);
 		e -= dx;
 		if (e < 0)
 		{
@@ -85,7 +85,7 @@ void	eighth_octant(t_wireframe *w, t_point p1, t_point p2)
 	dy = dy * 2;
 	while ((int)p1.x != (int)p2.x)
 	{
-		draw_pixel(w, p1, 0);
+		draw_pixel(w, p1, p1, p1);
 		e += dy;
 		if (e < 0)
 		{
@@ -109,7 +109,7 @@ void	seventh_octant(t_wireframe *w, t_point p1, t_point p2)
 	dx = dx * 2;
 	while ((int)p1.y != (int)p2.y)
 	{
-		draw_pixel(w, p1, 0);
+		draw_pixel(w, p1, p1, p1);
 		e += dx;
 		if (e > 0)
 		{
@@ -133,7 +133,7 @@ void	forth_octant(t_wireframe *w, t_point p1, t_point p2)
 	dx = dx * 2;
 	while ((int)p1.x != (int)p2.x)
 	{
-		draw_pixel(w, p1, 0);
+		draw_pixel(w, p1, p1, p1);
 		e += dy;
 		if (e >= 0)
 		{
@@ -157,7 +157,7 @@ void	third_octant(t_wireframe *w, t_point p1, t_point p2)
 	dx = dx * 2;
 	while ((int)p1.y != (int)p2.y)
 	{
-		draw_pixel(w, p1, 0);
+		draw_pixel(w, p1, p1, p1);
 		e += dx;
 		if (e <= 0)
 		{
@@ -181,7 +181,7 @@ void	fifth_octant(t_wireframe *w, t_point p1, t_point p2)
 	dy = dy * 2;
 	while ((int)p1.x != (int)p2.x)
 	{
-		draw_pixel(w, p1, 0);
+		draw_pixel(w, p1, p1, p1);
 		e -= dy;
 		if (e >= 0)
 		{
@@ -205,7 +205,7 @@ void	sixth_octant(t_wireframe *w, t_point p1, t_point p2)
 	dy = dy * 2;
 	while ((int)p1.y != (int)p2.y)
 	{
-		draw_pixel(w, p1, 0);
+		draw_pixel(w, p1, p1, p1);
 		e -= dx;
 		if (e >= 0)
 		{
@@ -272,7 +272,7 @@ void	linear_absciss(t_wireframe *w, t_point p1, t_point p2, int direction)
 {
 	while ((int)p1.y != (int)p2.y)
 	{
-		draw_pixel(w, p1, 0);
+		draw_pixel(w, p1, p1, p1);
 		p1.y += direction;
 	}
 }
@@ -281,7 +281,7 @@ void	linear_ordinate(t_wireframe *w, t_point p1, t_point p2, int direction)
 {
 	while ((int)p1.x != (int)p2.x)
 	{
-		draw_pixel(w, p1, 0);
+		draw_pixel(w, p1, p1, p1);
 		p1.x += direction;
 	}
 }
@@ -290,7 +290,7 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 {
 	int		dx;
 	int		dy;
-	float	e;
+	t_point	pt;
 
 	dx = (int)p2.x - (int)p1.x;
 	dy = (int)p2.y - (int)p1.y;
