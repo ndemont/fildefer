@@ -260,6 +260,25 @@ void	forth_dial(t_wireframe *w, t_point p1, t_point p2)
 		seventh_octant(w, p1, p2);
 }
 
+
+void	linear_absciss(t_wireframe *w, t_point p1, t_point p2, int direction)
+{
+	while ((int)p1.y != (int)p2.y)
+	{
+		draw_pixel(w, p1, 0);
+		p1.y += direction;
+	}
+}
+
+void	linear_ordinate(t_wireframe *w, t_point p1, t_point p2, int direction)
+{
+	while ((int)p1.x != (int)p2.x)
+	{
+		draw_pixel(w, p1, 0);
+		p1.x += direction;
+	}
+}
+
 void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 {
 	int		dx;
@@ -280,13 +299,7 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 					forth_dial(w, p1, p2);
 			}
 			else
-			{
-				while ((int)p1.x != (int)p2.x)
-				{
-					draw_pixel(w, p1, 0);
-					p1.x += 1;
-				}
-			}
+				linear_ordinate(w, p1, p2, 1);
 		}
 		else
 		{
@@ -298,13 +311,7 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 					third_dial(w, p1, p2);
 			}
 			else
-			{
-				while ((int)p1.x != (int)p2.x)
-				{
-					draw_pixel(w, p1, 0);
-					p1.x -= 1;
-				}
-			}
+				linear_ordinate(w, p1, p2, -1);
 		}
 	}
 	else
@@ -312,21 +319,10 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 		if (dy != 0)
 		{
 			if (dy > 0)
-			{
- 				while ((int)p1.y != (int)p2.y)
-				{
-					draw_pixel(w, p1, 0);
-					p1.y += 1;
-				}
-			}
+				linear_absciss(w, p1, p2, 1);
 			else
-			{
-				while ((int)p1.y != (int)p2.y)
-				{
-					draw_pixel(w, p1, 0);
-					p1.y -= 1;
-				}
-			}
+				linear_absciss(w, p1, p2, -1);
 		}
 	}
 }
+
