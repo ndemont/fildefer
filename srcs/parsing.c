@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 12:24:46 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/26 12:43:10 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/26 12:51:20 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,20 @@ int	get_dimensions(char *file, t_wireframe *wireframe)
 	return (1);
 }
 
-void	update_limits(t_wireframe *w, float x, float y)
+void	update_limits(t_wireframe *w, float x, float y, float z)
 {
 	if (x > w->max.x)
 		w->max.x = x;
 	if (y > w->max.y)
 		w->max.y = y;
+	if (z > w->max.z)
+		w->max.z = z;
 	if (x < w->min.x)
 		w->min.x = x;
 	if (y < w->min.y)
 		w->min.y = y;
+	if (z < w->min.z)
+		w->min.z = z;
 }
 
 int	fill_map(t_wireframe *w, char *line, int y)
@@ -100,7 +104,7 @@ int	fill_map(t_wireframe *w, char *line, int y)
 			w->map[y][x].z = (float)ft_atoi(&line[i]);
 			w->map[y][x].x = (float)(sqrtf(2.0) / 2.0) *((float)x - (float)y);
 			w->map[y][x].y = (float)(sqrtf(2.0 / 3.0) * (w->map[y][x].z * 0.3)) - (((-1.0) / sqrtf(6.0)) * ((float)x + (float)y));
-			update_limits(w, w->map[y][x].x, w->map[y][x].y);
+			update_limits(w, w->map[y][x].x, w->map[y][x].y, w->map[y][x].z);
 			x++;
 			while (line && line[i] > 32 && line[i] < 127)
 				i++;

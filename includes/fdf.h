@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:39:26 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/26 12:39:42 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/26 12:51:46 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	zoom_map(t_wireframe *w, float zoom);
 void	move_x(t_wireframe *w, int shift);
 void	move_y(t_wireframe *w, int shift);
 void	zoom(t_wireframe*w, int	zoom);
-void	update_limits(t_wireframe *w, float x, float y);
+void	update_limits(t_wireframe *w, float x, float y, float z);
 float	set_zoom(t_wireframe *w);
 /* ************************************************************************** */
 /*                           Window Settings                                  */
