@@ -6,28 +6,11 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 12:28:17 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/26 18:35:00 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/26 21:57:03 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	draw_pixel(t_wireframe *w, t_point p1, t_point pt, t_point p2)
-{
-	float	total_diff;
-	float	temp_diff;
-	float	ratio;
-	char	*str;
-	
-	total_diff = (p2.x - p1.x);
-	temp_diff = (p2.x - pt.x);
-	ratio = 1 -(temp_diff / total_diff);
-	color_pixel(w, p1, pt, p2, ratio);
-	w->pixel.p = ((HEIGHT - ((int)pt.y)) * w->window.size) + ((WIDTH - ((int)pt.x)) * 4);
-	// w->window.data_addr[w->pixel.p + 2] = w->pixel.r;
-	// w->window.data_addr[w->pixel.p + 1] = w->pixel.g;
-	// w->window.data_addr[w->pixel.p + 0] = w->pixel.b;
-}
 
 void	first_octant(t_wireframe *w, t_point p1, t_point p2)
 {

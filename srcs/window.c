@@ -6,16 +6,16 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 12:18:56 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/26 12:21:44 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/26 22:00:45 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	display_window(t_wireframe *wireframe)
+void	display_window(t_wireframe *w)
 {
-	mlx_put_image_to_window(wireframe->window.mlx_ptr, wireframe->window.win_ptr, wireframe->window.img_ptr, 0, 0);
-	mlx_loop(wireframe->window.mlx_ptr);
+	mlx_put_image_to_window(w->window.mlx_ptr, w->window.win_ptr, w->window.img_ptr, 0, 0);
+	mlx_loop(w->window.mlx_ptr);
 }
 
 void	fill_window(t_wireframe *w)
