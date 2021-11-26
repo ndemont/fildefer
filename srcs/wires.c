@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_wire.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/26 12:28:17 by ndemont           #+#    #+#             */
+/*   Updated: 2021/11/26 12:29:30 by ndemont          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 void	draw_pixel(t_wireframe *w, t_point	p, char	*s)
 {
-
 	w->pixel.r = (char)255;
 	w->pixel.g = (char)255;
 	w->pixel.b = (char)255;
@@ -12,8 +23,6 @@ void	draw_pixel(t_wireframe *w, t_point	p, char	*s)
 	w->window.data_addr[w->pixel.p + 1] = w->pixel.g;
 	w->window.data_addr[w->pixel.p + 0] = w->pixel.b;
 }
-
-
 
 void	first_octant(t_wireframe *w, t_point p1, t_point p2)
 {
@@ -207,7 +216,6 @@ void	sixth_octant(t_wireframe *w, t_point p1, t_point p2)
 	}
 }
 
-
 void	first_dial(t_wireframe *w, t_point p1, t_point p2)
 {
 	int		dx;
@@ -260,7 +268,6 @@ void	forth_dial(t_wireframe *w, t_point p1, t_point p2)
 		seventh_octant(w, p1, p2);
 }
 
-
 void	linear_absciss(t_wireframe *w, t_point p1, t_point p2, int direction)
 {
 	while ((int)p1.y != (int)p2.y)
@@ -289,7 +296,7 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 	dy = (int)p2.y - (int)p1.y;
 	if (dx != 0)
 	{
-		if (dx > 0) 
+		if (dx > 0)
 		{
 			if (dy != 0)
 			{
@@ -325,4 +332,3 @@ void	draw_wire(t_wireframe *w, t_point p1, t_point p2)
 		}
 	}
 }
-

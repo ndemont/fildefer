@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:39:26 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/26 11:52:52 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/26 12:39:42 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,12 @@ typedef struct	s_window
 
 typedef struct	s_wireframe
 {
-	float			x_max;
-	float			y_max;
-	float			x_min;
-	float			y_min;
 	float			x_center;
 	float			y_center;
 	float			x_len;
 	float			y_len;
+	t_point			min;
+	t_point			max;
 	t_pixel			pixel;
 	t_window		window;
 	t_point			**map;
@@ -134,6 +132,7 @@ float	set_zoom(t_wireframe *w);
 /* ************************************************************************** */
 
 void	fill_window(t_wireframe *w);
+void	display_window(t_wireframe *wireframe);
 
 /* ************************************************************************** */
 /*                           Debug                                            */

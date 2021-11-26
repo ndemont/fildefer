@@ -1,14 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/26 12:21:28 by ndemont           #+#    #+#             */
+/*   Updated: 2021/11/26 12:24:33 by ndemont          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
-void	display_window(t_wireframe *wireframe)
+int	main(int ac, char **av)
 {
-	mlx_put_image_to_window(wireframe->window.mlx_ptr, wireframe->window.win_ptr, wireframe->window.img_ptr, 0, 0);
-	mlx_loop(wireframe->window.mlx_ptr);
-}
-
-int main(int ac, char **av)
-{
-	t_wireframe wireframe;
+	t_wireframe	wireframe;
 
 	if (ac != 2)
 	{

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/26 12:20:21 by ndemont           #+#    #+#             */
+/*   Updated: 2021/11/26 12:46:51 by ndemont          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 void	init_window(t_window *window)
@@ -7,7 +19,8 @@ void	init_window(t_window *window)
 	window->bits_per_pixel = 0;
 	window->win_ptr = mlx_new_window(window->mlx_ptr, WIDTH, HEIGHT, "fdf");
 	window->img_ptr = mlx_new_image(window->mlx_ptr, WIDTH, HEIGHT);
-	window->data_addr = (unsigned char *)mlx_get_data_addr(window->img_ptr, &(window->bits_per_pixel), &(window->size), &(window->endian));
+	window->data_addr = (unsigned char *)mlx_get_data_addr(window->img_ptr,
+			&(window->bits_per_pixel), &(window->size), &(window->endian));
 }
 
 void	init_pixel(t_pixel *pixel, int r, int g, int b)
@@ -25,9 +38,11 @@ void	init_wireframe(t_wireframe *wireframe)
 	init_pixel(&wireframe->pixel, 255, 255, 255);
 	wireframe->x_len = 0;
 	wireframe->y_len = 0;
-	wireframe->x_max = 0;
-	wireframe->y_max = 0;
-	wireframe->x_min = 0;
-	wireframe->y_min = 0;
+	wireframe->max.x = 0;
+	wireframe->max.y = 0;
+	wireframe->max.z = 0;
+	wireframe->min.x = 0;
+	wireframe->min.y = 0;
+	wireframe->min.z = 0;
 	wireframe->map = NULL;
 }
