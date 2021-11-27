@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:39:26 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/27 20:04:01 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/27 21:09:37 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@
 #  define MOVE_L 0x7B
 #  define MOVE_F 0x7E
 #  define MOVE_B 0x7D
+#  define ZOOM_IN 0x1C
+#  define ZOOM_OUT 0x1B
 #  define SWITCH_CAM 0x31
 #  define FILTER 0x03
 #  define ESC 0x35

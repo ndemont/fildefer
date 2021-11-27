@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 12:26:39 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/26 12:52:15 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/27 21:08:32 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	set_map(t_wireframe *w)
 
 	zoom = set_zoom(w);
 	zoom_map(w, zoom);
+	center_map(w);
 }
 
 void	move_x(t_wireframe *w, int shift)
@@ -56,28 +57,28 @@ void	move_y(t_wireframe *w, int shift)
 	}
 }
 
-void	zoom(t_wireframe *w, int zoom)
-{
-	int	x;
-	int	y;
+//void	zoom(t_wireframe *w, int zoom)
+//{
+//	int	x;
+//	int	y;
 
-	y = 0;
-	while (y < w->y_len)
-	{
-		x = 0;
-		while (x < w->x_len)
-		{
-			w->map[y][x].x *= zoom;
-			w->map[y][x].y *= zoom;
-			if (w->map[y][x].x > w->max.x)
-				w->max.x = w->map[y][x].x;
-			if (w->map[y][x].y > w->max.y)
-				w->max.y = w->map[y][x].y;
-			x++;
-		}
-		y++;
-	}
-}
+//	y = 0;
+//	while (y < w->y_len)
+//	{
+//		x = 0;
+//		while (x < w->x_len)
+//		{
+//			w->map[y][x].x *= zoom;
+//			w->map[y][x].y *= zoom;
+//			if (w->map[y][x].x > w->max.x)
+//				w->max.x = w->map[y][x].x;
+//			if (w->map[y][x].y > w->max.y)
+//				w->max.y = w->map[y][x].y;
+//			x++;
+//		}
+//		y++;
+//	}
+//}
 
 void	center_map(t_wireframe *w)
 {
@@ -135,5 +136,4 @@ void	zoom_map(t_wireframe *w, float zoom)
 		}
 		y++;
 	}
-	center_map(w);
 }

@@ -12,6 +12,15 @@ static void	ft_print_w(t_wireframe *w, int x, int shift)
 	display_window(w);
 }
 
+static void	ft_print_zoom(t_wireframe *w, int x, float zoom)
+{
+	w->window.img_ptr = mlx_new_image(w->window.mlx_ptr, WIDTH, HEIGHT);
+	w->window.data_addr = mlx_get_data_addr(w->window.img_ptr, &(w->window.bits_per_pixel), &(w->window.size), &(w->window.endian));
+	zoom_map(w, zoom);
+	fill_window(w);
+	display_window(w);
+}
+
 int	ft_event(int keycode, t_wireframe *w)
 {
 	if (!ft_close_win(keycode, w))
@@ -44,6 +53,16 @@ void	ft_move_cam(int keycode, t_wireframe *w)
 	{
 		printf("keycode = %d\n", keycode);
 		ft_print_w(w, 0, -10);
+	}
+	if (keycode == ZOOM_IN)
+	{
+		printf("keycode = %d\n", keycode);
+		ft_print_zoom(w, 0, 1.1);
+	}
+	if (keycode == ZOOM_OUT)
+	{
+		printf("keycode = %d\n", keycode);
+		ft_print_zoom(w, 0, 0.9);
 	}
 }
 
