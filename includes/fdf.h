@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:39:26 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/26 22:33:45 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/27 20:04:01 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,12 @@ void		init_pixel(t_pixel *pixel, int r, int g, int b);
 /*                           Parsing                                          */
 /* ************************************************************************** */
 
+int			get_dimensions(char *file, t_wireframe *wireframe);
+
+/* ************************************************************************** */
+/*                           Parsing                                          */
+/* ************************************************************************** */
+
 int			parsing(char *file, t_wireframe *wireframe);
 
 /* ************************************************************************** */
@@ -119,6 +125,23 @@ float	set_zoom(t_wireframe *w);
 
 void	fill_window(t_wireframe *w);
 void	display_window(t_wireframe *wireframe);
+
+/* ************************************************************************** */
+/*                         Bresenham Algorithm                                */
+/* ************************************************************************** */
+
+void	first_octant(t_wireframe *w, t_point p1, t_point p2);
+void	second_octant(t_wireframe *w, t_point p1, t_point p2);
+void	third_octant(t_wireframe *w, t_point p1, t_point p2);
+void	forth_octant(t_wireframe *w, t_point p1, t_point p2);
+void	fifth_octant(t_wireframe *w, t_point p1, t_point p2);
+void	sixth_octant(t_wireframe *w, t_point p1, t_point p2);
+void	seventh_octant(t_wireframe *w, t_point p1, t_point p2);
+void	eighth_octant(t_wireframe *w, t_point p1, t_point p2);
+void	first_dial(t_wireframe *w, t_point p1, t_point p2);
+void	second_dial(t_wireframe *w, t_point p1, t_point p2);
+void	third_dial(t_wireframe *w, t_point p1, t_point p2);
+void	forth_dial(t_wireframe *w, t_point p1, t_point p2);
 
 /* ************************************************************************** */
 /*                          Color Settings                                    */

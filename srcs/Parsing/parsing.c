@@ -6,65 +6,11 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 12:24:46 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/26 19:17:44 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/27 19:53:31 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-int	open_file(char *file)
-{
-	int		fd;
-
-	fd = open(file, O_RDONLY);
-	return (fd);
-}
-
-int	get_dimensions(char *file, t_wireframe *wireframe)
-{
-	char	*line;
-	int		ret;
-	int		fd;
-	int		i;
-
-	fd = open_file(file);
-	if (fd < 0)
-	{
-		free_wireframe(wireframe, 2);
-		return (0);
-	}
-	ret = 1;
-	while (ret > 0)
-	{
-		ret = get_next_line(fd, &line);
-		if (ret < 0 || !line)
-		{
-			close(fd);
-			free(line);
-			return (0);
-		}
-		i = 0;
-		if (line && line[0])
-			wireframe->y_len++;
-		if (!wireframe->x_len)
-		{
-			while (line && line[i])
-			{
-				if (line && line[i] > 32 && line[i] < 127)
-				{
-					wireframe->x_len++;
-					while (line && line[i] > 32 && line[i] < 127)
-						i++;
-				}
-				if (line[i])
-					i++;
-			}
-		}
-		free(line);
-	}
-	close(fd);
-	return (1);
-}
 
 void	update_limits(t_wireframe *w, float x, float y, float z)
 {
@@ -122,7 +68,7 @@ int	read_file(char *file, t_wireframe *w)
 	int		y;
 	int		ret;
 
-	fd = open_file(file);
+	fd = open(file, O_RDONLY);
 	if (fd < 0)
 	{
 		free_wireframe(w, 2);
