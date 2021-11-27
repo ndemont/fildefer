@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:39:26 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/26 22:02:46 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/26 22:33:45 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,26 +87,6 @@ typedef struct	s_wireframe
 	t_point			**map;
 }				t_wireframe;
 
-int			parsing(char *file, t_wireframe *wireframe);
-t_wireframe	*free_wireframe(t_wireframe *wireframe, int errno);
-void		print_error(int errno);
-
-int			ft_close_win(int keycode, t_wireframe *s);
-int			ft_event(int keycode, t_wireframe *w);
-int			ft_cross(int keycode, t_wireframe *s);
-
-void		display_window(t_wireframe *wireframe);
-void		ft_move_cam(int keycode, t_wireframe *w);
-
-void		print_z(t_wireframe *w);
-void		color_pixel(t_wireframe *w, t_point pt);
-
-void		draw_wire(t_wireframe *w, t_point p1, t_point p2);
-
-void		move_y(t_wireframe *w, int shift);
-void		move_x(t_wireframe *w, int shift);
-void		draw_pixel(t_wireframe *w, t_point p1, t_point pt, t_point p2);
-
 /* ************************************************************************** */
 /*                           Initialization                                   */
 /* ************************************************************************** */
@@ -114,6 +94,12 @@ void		draw_pixel(t_wireframe *w, t_point p1, t_point pt, t_point p2);
 void		init_wireframe(t_wireframe *wireframe);
 void		init_window(t_window *window);
 void		init_pixel(t_pixel *pixel, int r, int g, int b);
+
+/* ************************************************************************** */
+/*                           Parsing                                          */
+/* ************************************************************************** */
+
+int			parsing(char *file, t_wireframe *wireframe);
 
 /* ************************************************************************** */
 /*                           Map Settings                                     */
@@ -135,9 +121,35 @@ void	fill_window(t_wireframe *w);
 void	display_window(t_wireframe *wireframe);
 
 /* ************************************************************************** */
-/*                           Debug                                            */
+/*                          Color Settings                                    */
 /* ************************************************************************** */
-void	debug(t_wireframe *w);
 
+void		color_pixel(t_wireframe *w, t_point pt);
+void		draw_wire(t_wireframe *w, t_point p1, t_point p2);
+void		draw_pixel(t_wireframe *w, t_point p1, t_point pt, t_point p2);
+
+
+/* ************************************************************************** */
+/*                           Events                                           */
+/* ************************************************************************** */
+
+int			ft_close_win(int keycode, t_wireframe *s);
+int			ft_event(int keycode, t_wireframe *w);
+int			ft_cross(int keycode, t_wireframe *s);
+void		ft_move_cam(int keycode, t_wireframe *w);
+void		move_y(t_wireframe *w, int shift);
+void		move_x(t_wireframe *w, int shift);
+
+/* ************************************************************************** */
+/*                           Errors                                           */
+/* ************************************************************************** */
+
+void		print_error(int errno);
+
+/* ************************************************************************** */
+/*                           Memory                                           */
+/* ************************************************************************** */
+
+t_wireframe	*free_wireframe(t_wireframe *wireframe, int errno);
 
 #endif
