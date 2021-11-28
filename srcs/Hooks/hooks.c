@@ -16,7 +16,10 @@ static void	ft_print_zoom(t_wireframe *w, int x, float zoom)
 {
 	w->window.img_ptr = mlx_new_image(w->window.mlx_ptr, WIDTH, HEIGHT);
 	w->window.data_addr = mlx_get_data_addr(w->window.img_ptr, &(w->window.bits_per_pixel), &(w->window.size), &(w->window.endian));
-	zoom_map(w, zoom);
+	w->x_center = WIDTH / 2;
+	w->y_center = HEIGHT / 2;
+	zoom2_map(w, zoom);
+	center_map(w);
 	fill_window(w);
 	display_window(w);
 }

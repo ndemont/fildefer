@@ -22,3 +22,4 @@ https://fr.wikipedia.org/wiki/Algorithme_de_trac%C3%A9_de_segment_de_Bresenham
 Mac keycodes:
 
 https://gist.github.com/eegrok/949034
+https://eastmanreference.com/complete-list-of-applescript-key-codes
