@@ -19,7 +19,11 @@ Bresenham's line algorithm:
 https://fr.wikipedia.org/wiki/Algorithme_de_trac%C3%A9_de_segment_de_Bresenham
 
 
-Mac keycodes:
+Mac keyboard keycodes:
 
 https://gist.github.com/eegrok/949034
 https://eastmanreference.com/complete-list-of-applescript-key-codes
+
+Linux keyboard keycodes:
+
+https://gist.github.com/rickyzhang82/8581a762c9f9fc6ddb8390872552c250
