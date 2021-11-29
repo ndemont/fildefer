@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 12:21:28 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/27 20:05:49 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/29 11:26:02 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	main(int ac, char **av)
 		mlx_hook(w.window.win_ptr, 17, 1L << 17, ft_cross, &w);
 	else
 		mlx_hook(w.window.win_ptr, 33, 1L << 5, ft_cross, &w);
-	mlx_loop_hook(w.window.mlx_ptr, ft_event, &w);
 	display_window(&w);
 	return (0);
 }

@@ -37,6 +37,7 @@ int	ft_event(int keycode, t_wireframe *w)
 
 void	ft_move_cam(int keycode, t_wireframe *w)
 {
+	printf("keycode = %d\n", keycode);
 	if (keycode == MOVE_L)
 	{
 		printf("keycode = %d\n", keycode);
