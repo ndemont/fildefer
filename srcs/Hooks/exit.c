@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hooks.c                                            :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/29 14:36:09 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/29 14:53:30 by ndemont          ###   ########.fr       */
+/*   Created: 2021/11/29 14:36:33 by ndemont           #+#    #+#             */
+/*   Updated: 2021/11/29 14:38:15 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft_print_w(t_wireframe *w, int x, int shift)
+int	ft_cross(int keycode, t_wireframe *w)
 {
-	w->window.img_ptr = mlx_new_image(w->window.mlx_ptr, WIDTH, HEIGHT);
-	w->window.data_addr = mlx_get_data_addr(w->window.img_ptr, &(w->window.bits_per_pixel), &(w->window.size), &(w->window.endian));
-	if (x)
-		move_x(w, shift);
-	else
-		move_y(w, shift);
-	fill_window(w);
-	display_window(w);
+	printf("keycode = %d\n", keycode);
+	(void)keycode;
+	(void)w;
+	exit(0);
+}
+
+int	ft_close_win(int keycode, t_wireframe *w)
+{
+	(void)w;
+	if (keycode == ESC)
+		return (0);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:39:26 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/29 12:09:03 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/29 14:53:16 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@
 # if LINUX == 1
 #  define MOVE_R 65363
 #  define MOVE_L 65361
-#  define MOVE_F 65362
-#  define MOVE_B 65364
+#  define MOVE_U 65362
+#  define MOVE_D 65364
 #  define ZOOM_IN 61
 #  define ZOOM_OUT 45
 #  define WIDE 119
@@ -45,10 +45,12 @@
 # else
 #  define MOVE_R 0x7C
 #  define MOVE_L 0x7B
-#  define MOVE_F 0x7E
-#  define MOVE_B 0x7D
+#  define MOVE_U 0x7E
+#  define MOVE_D 0x7D
 #  define ZOOM_IN 0x18
 #  define ZOOM_OUT 0x1B
+#  define WIDE 119
+#  define NARROW 115
 #  define SWITCH_CAM 0x31
 #  define FILTER 0x03
 #  define ESC 0x35
@@ -123,7 +125,11 @@ void	zoom_map(t_wireframe *w, float zoom);
 void	zoom2_map(t_wireframe *w, float zoom);
 void	move_x(t_wireframe *w, int shift);
 void	move_y(t_wireframe *w, int shift);
-void	zoom(t_wireframe*w, int	zoom);
+void	zoom(int keycode, t_wireframe *w);
+// void	zoom(t_wireframe*w, int	zoom);
+void    coordinates(int keycode, t_wireframe *w);
+void	ft_print_w(t_wireframe *w, int x, int shift);
+void	altitude(int keycode, t_wireframe *w);
 void	update_limits(t_wireframe *w, float x, float y, float z);
 float	set_zoom(t_wireframe *w);
 /* ************************************************************************** */
