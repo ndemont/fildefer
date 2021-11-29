@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 12:26:39 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/28 15:42:42 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/29 13:05:58 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,25 @@ void	zoom2_map(t_wireframe *w, float zoom)
 			w->map[y][x].x *= zoom;
 			w->map[y][x].y *= zoom;
 			update_limits(w, w->map[y][x].x, w->map[y][x].y, w->map[y][x].z);
+			x++;
+		}
+		y++;
+	}
+}
+
+void	amplitude_map(t_wireframe *w, float zoom)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < w->y_len)
+	{
+		x = 0;
+		while (x < (int)w->x_len)
+		{
+			w->map[y][x].y += w->map[y][x].z * zoom;
+			//update_limits(w, w->map[y][x].x, w->map[y][x].y, w->map[y][x].z);
 			x++;
 		}
 		y++;

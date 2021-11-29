@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:39:26 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/29 11:29:04 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/29 12:09:03 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 #  define MOVE_B 65364
 #  define ZOOM_IN 61
 #  define ZOOM_OUT 45
+#  define WIDE 119
+#  define NARROW 115
 #  define SWITCH_CAM 32
 #  define FILTER 41
 #  define ESC 65307
@@ -147,6 +149,7 @@ void	first_dial(t_wireframe *w, t_point p1, t_point p2);
 void	second_dial(t_wireframe *w, t_point p1, t_point p2);
 void	third_dial(t_wireframe *w, t_point p1, t_point p2);
 void	forth_dial(t_wireframe *w, t_point p1, t_point p2);
+void	amplitude_map(t_wireframe *w, float zoom);
 
 /* ************************************************************************** */
 /*                          Color Settings                                    */

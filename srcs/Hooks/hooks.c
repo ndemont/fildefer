@@ -24,6 +24,16 @@ static void	ft_print_zoom(t_wireframe *w, int x, float zoom)
 	display_window(w);
 }
 
+static void	ft_print_altitude(t_wireframe *w, float shift)
+{
+	w->window.img_ptr = mlx_new_image(w->window.mlx_ptr, WIDTH, HEIGHT);
+	w->window.data_addr = mlx_get_data_addr(w->window.img_ptr, &(w->window.bits_per_pixel), &(w->window.size), &(w->window.endian));
+	amplitude_map(w, shift);
+	fill_window(w);
+	display_window(w);
+}
+
+
 int	ft_event(int keycode, t_wireframe *w)
 {
 	if (!ft_close_win(keycode, w))
@@ -67,6 +77,16 @@ void	ft_move_cam(int keycode, t_wireframe *w)
 	{
 		printf("keycode = %d\n", keycode);
 		ft_print_zoom(w, 0, 0.9);
+	}
+		if (keycode == WIDE)
+	{
+		printf("keycode = %d\n", keycode);
+		ft_print_altitude(w, 0.1);
+	}
+	if (keycode == NARROW)
+	{
+		printf("keycode = %d\n", keycode);
+		ft_print_altitude(w, -0.1);
 	}
 }
 
