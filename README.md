@@ -13,6 +13,8 @@ Isometric perspective:
 
 https://fr.wikipedia.org/wiki/Perspective_isom%C3%A9trique
 
+https://www.petercollingridge.co.uk/tutorials/svg/isometric-projection/
+
 
 Bresenham's line algorithm:
 
