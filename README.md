@@ -16,6 +16,10 @@ https://fr.wikipedia.org/wiki/Perspective_isom%C3%A9trique
 https://www.petercollingridge.co.uk/tutorials/svg/isometric-projection/
 
 
+Rotation around center:
+
+https://a5huynh.github.io/posts/2019/isometric-rotation/
+
 Bresenham's line algorithm:
 
 https://fr.wikipedia.org/wiki/Algorithme_de_trac%C3%A9_de_segment_de_Bresenham
