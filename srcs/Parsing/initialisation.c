@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   initialisation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 12:20:21 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/26 15:21:12 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/30 17:01:47 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	init_pixel(t_pixel *pixel, int r, int g, int b)
 void	init_wireframe(t_wireframe *wireframe)
 {
 	wireframe->window.mlx_ptr = mlx_init();
-	init_window(&wireframe->window);
 	init_pixel(&wireframe->pixel, 255, 255, 255);
 	wireframe->x_len = 0;
 	wireframe->y_len = 0;

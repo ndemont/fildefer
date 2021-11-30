@@ -6,30 +6,29 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 10:39:26 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/29 14:53:16 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/30 15:28:46 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_HPP
-#define FDF_HPP
+#ifndef FDF_H
+# define FDF_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <fcntl.h>
-#include <math.h>
-#include "mlx.h"
-#include "libft.h"
-#include "get_next_line.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <fcntl.h>
+# include <math.h>
+# include "mlx.h"
+# include "libft.h"
+# include "get_next_line.h"
 
-#define STDIN_FILENO 0
-#define STDOUT_FILENO 1
-#define STDERR_FILENO 2
-#define FOV (70 * (M_PI / 180))
-#define HEIGHT 1000
-#define WIDTH 1000
-#define	X_SHIFT 350
-#define	Y_SHIFT 200
+# define STDIN_FILENO 0
+# define STDOUT_FILENO 1
+# define STDERR_FILENO 2
+# define HEIGHT 1000
+# define WIDTH 1000
+# define X_SHIFT 350
+# define Y_SHIFT 200
 # if LINUX == 1
 #  define MOVE_R 65363
 #  define MOVE_L 65361
@@ -54,9 +53,9 @@
 #  define SWITCH_CAM 0x31
 #  define FILTER 0x03
 #  define ESC 0x35
-#endif
+# endif
 
-typedef struct	s_pixel
+typedef struct s_pixel
 {
 	int			p;
 	char		r;
@@ -64,14 +63,14 @@ typedef struct	s_pixel
 	char		b;
 }				t_pixel;
 
-typedef struct	s_point
+typedef struct s_point
 {
 	float	x;
 	float	y;
 	float	z;
 }				t_point;
 
-typedef struct	s_window
+typedef struct s_window
 {
 	int				size;
 	int				endian;
@@ -82,7 +81,7 @@ typedef struct	s_window
 	char			*data_addr;
 }				t_window;
 
-typedef struct	s_wireframe
+typedef struct s_wireframe
 {
 	float			x_center;
 	float			y_center;
@@ -119,43 +118,44 @@ int			parsing(char *file, t_wireframe *wireframe);
 /*                           Map Settings                                     */
 /* ************************************************************************** */
 
-void	set_map(t_wireframe *w);
-void	center_map(t_wireframe*w);
-void	zoom_map(t_wireframe *w, float zoom);
-void	zoom2_map(t_wireframe *w, float zoom);
-void	move_x(t_wireframe *w, int shift);
-void	move_y(t_wireframe *w, int shift);
-void	zoom(int keycode, t_wireframe *w);
-// void	zoom(t_wireframe*w, int	zoom);
-void    coordinates(int keycode, t_wireframe *w);
-void	ft_print_w(t_wireframe *w, int x, int shift);
-void	altitude(int keycode, t_wireframe *w);
-void	update_limits(t_wireframe *w, float x, float y, float z);
-float	set_zoom(t_wireframe *w);
+void		set_map(t_wireframe *w);
+void		center_map(t_wireframe*w);
+void		zoom_map(t_wireframe *w, float zoom);
+void		zoom2_map(t_wireframe *w, float zoom);
+void		move_x(t_wireframe *w, int shift);
+void		move_y(t_wireframe *w, int shift);
+void		zoom(int keycode, t_wireframe *w);
+void		coordinates(int keycode, t_wireframe *w);
+void		ft_print_w(t_wireframe *w, int x, int shift);
+void		altitude(int keycode, t_wireframe *w);
+void		update_limits(t_wireframe *w, float x, float y, float z);
+float		set_zoom(t_wireframe *w);
+void		reset_center(t_wireframe *w, int x, int y, float zoom);
+
 /* ************************************************************************** */
 /*                           Window Settings                                  */
 /* ************************************************************************** */
 
-void	fill_window(t_wireframe *w);
-void	display_window(t_wireframe *wireframe);
+void		fill_window(t_wireframe *w);
+void		display_window(t_wireframe *wireframe);
 
 /* ************************************************************************** */
 /*                         Bresenham Algorithm                                */
 /* ************************************************************************** */
 
-void	first_octant(t_wireframe *w, t_point p1, t_point p2);
-void	second_octant(t_wireframe *w, t_point p1, t_point p2);
-void	third_octant(t_wireframe *w, t_point p1, t_point p2);
-void	forth_octant(t_wireframe *w, t_point p1, t_point p2);
-void	fifth_octant(t_wireframe *w, t_point p1, t_point p2);
-void	sixth_octant(t_wireframe *w, t_point p1, t_point p2);
-void	seventh_octant(t_wireframe *w, t_point p1, t_point p2);
-void	eighth_octant(t_wireframe *w, t_point p1, t_point p2);
-void	first_dial(t_wireframe *w, t_point p1, t_point p2);
-void	second_dial(t_wireframe *w, t_point p1, t_point p2);
-void	third_dial(t_wireframe *w, t_point p1, t_point p2);
-void	forth_dial(t_wireframe *w, t_point p1, t_point p2);
-void	amplitude_map(t_wireframe *w, float zoom);
+void		first_octant(t_wireframe *w, t_point p1, t_point p2);
+void		second_octant(t_wireframe *w, t_point p1, t_point p2);
+void		third_octant(t_wireframe *w, t_point p1, t_point p2);
+void		forth_octant(t_wireframe *w, t_point p1, t_point p2);
+void		fifth_octant(t_wireframe *w, t_point p1, t_point p2);
+void		sixth_octant(t_wireframe *w, t_point p1, t_point p2);
+void		seventh_octant(t_wireframe *w, t_point p1, t_point p2);
+void		eighth_octant(t_wireframe *w, t_point p1, t_point p2);
+void		first_dial(t_wireframe *w, t_point p1, t_point p2);
+void		second_dial(t_wireframe *w, t_point p1, t_point p2);
+void		third_dial(t_wireframe *w, t_point p1, t_point p2);
+void		forth_dial(t_wireframe *w, t_point p1, t_point p2);
+void		amplitude_map(t_wireframe *w, float zoom);
 
 /* ************************************************************************** */
 /*                          Color Settings                                    */
@@ -164,7 +164,6 @@ void	amplitude_map(t_wireframe *w, float zoom);
 void		color_pixel(t_wireframe *w, t_point pt);
 void		draw_wire(t_wireframe *w, t_point p1, t_point p2);
 void		draw_pixel(t_wireframe *w, t_point p1, t_point pt, t_point p2);
-
 
 /* ************************************************************************** */
 /*                           Events                                           */

@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 12:51:35 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/30 11:55:10 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/30 12:12:42 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	first_octant(t_wireframe *w, t_point p1, t_point p2)
 	e = dx;
 	dx = dx * 2 ;
 	dy = dy * 2 ;
-	//printf("P1(%f,%f,%f)\n", p1.x, p1.y, p1.z);
-	//printf("P2(%f,%f,%f)\n", p2.x, p2.y, p2.z);
 	while ((int)pt.x < (int)p2.x)
 	{
 		draw_pixel(w, p1, pt, p2);

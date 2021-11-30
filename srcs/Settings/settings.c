@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 12:26:39 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/30 11:57:25 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/30 17:00:26 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,50 +16,12 @@ void	set_map(t_wireframe *w)
 {
 	float	zoom;
 
+	init_window(&w->window);
 	zoom = set_zoom(w);
 	zoom_map(w, zoom);
 	w->x_center = w->min.x + ((w->max.x - w->min.x) / 2);
 	w->y_center = w->min.y + ((w->max.y - w->min.y) / 2);
 	center_map(w);
-}
-
-void	move_x(t_wireframe *w, int shift)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	printf("shift = %d\n", shift);
-	while (y < w->y_len)
-	{
-		x = 0;
-		while (x < w->x_len)
-		{
-			printf("x(%f)	| ", w->map[y][x].x);
-			w->map[y][x].x += shift;
-			printf("x(%f)\n", w->map[y][x].x);
-			x++;
-		}
-		y++;
-	}
-}
-
-void	move_y(t_wireframe *w, int shift)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < w->y_len)
-	{
-		x = 0;
-		while (x < w->x_len)
-		{
-			w->map[y][x].y += shift;
-			x++;
-		}
-		y++;
-	}
 }
 
 void	center_map(t_wireframe *w)
@@ -124,46 +86,6 @@ void	zoom_map(t_wireframe *w, float zoom)
 			w->map[y][x].x *= zoom;
 			w->map[y][x].y *= zoom;
 			update_limits(w, w->map[y][x].x, w->map[y][x].y, w->map[y][x].z);
-			x++;
-		}
-		y++;
-	}
-}
-
-void	zoom2_map(t_wireframe *w, float zoom)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < w->y_len)
-	{
-		x = 0;
-		while (x < (int)w->x_len)
-		{
-			reset_center(w, x, y, zoom);
-			w->map[y][x].x *= zoom;
-			w->map[y][x].y *= zoom;
-			update_limits(w, w->map[y][x].x, w->map[y][x].y, w->map[y][x].z);
-			x++;
-		}
-		y++;
-	}
-}
-
-void	amplitude_map(t_wireframe *w, float zoom)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < w->y_len)
-	{
-		x = 0;
-		while (x < (int)w->x_len)
-		{
-			w->map[y][x].y += w->map[y][x].z * zoom;
-			//update_limits(w, w->map[y][x].x, w->map[y][x].y, w->map[y][x].z);
 			x++;
 		}
 		y++;

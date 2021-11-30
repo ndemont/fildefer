@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 12:18:56 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/30 10:34:09 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/30 14:41:32 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	display_window(t_wireframe *w)
 {
-	mlx_put_image_to_window(w->window.mlx_ptr, w->window.win_ptr, w->window.img_ptr, 0, 0);
+	mlx_put_image_to_window(w->window.mlx_ptr, \
+	w->window.win_ptr, w->window.img_ptr, 0, 0);
 	mlx_loop(w->window.mlx_ptr);
 }
 
