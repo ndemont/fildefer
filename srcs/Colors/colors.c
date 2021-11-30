@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 14:26:01 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/29 14:26:02 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/30 10:33:49 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 void	fill_pixel(t_wireframe *w, char r, char g, char b)
 {
-	w->window.data_addr[w->pixel.p + 2] = r;
-	w->window.data_addr[w->pixel.p + 1] = g;
-	w->window.data_addr[w->pixel.p + 0] = b;
+	if (w->pixel.p >= 0 && w->pixel.p < w->window.size * 1000)
+	{
+		w->window.data_addr[w->pixel.p + 2] = r;
+		w->window.data_addr[w->pixel.p + 1] = g;
+		w->window.data_addr[w->pixel.p + 0] = b;
+	}
 }
 
 void	find_gradient(t_wireframe *w, float color_coef)

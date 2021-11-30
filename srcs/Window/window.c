@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 12:18:56 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/26 22:00:45 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/30 10:34:09 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,12 @@ void	fill_window(t_wireframe *w)
 {
 	int	x;
 	int	y;
-	int	i;
 
 	y = 0;
-	while (y < w->y_len)
+	while (y < (int)w->y_len)
 	{
 		x = 0;
-		while (x < w->x_len)
+		while (x < (int)w->x_len)
 		{
 			if (w->map[y][x].x >= 0 && w->map[y][x].x < WIDTH)
 			{
