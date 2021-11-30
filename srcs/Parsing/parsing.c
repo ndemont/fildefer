@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 12:24:46 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/30 17:01:37 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/30 17:20:37 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,12 @@ int	fill_map(t_wireframe *w, char *line, int y)
 	return (1);
 }
 
-int	read_file(char *file, t_wireframe *w)
+int	read_file(int fd, t_wireframe *w)
 {
 	char	*line;
-	int		fd;
 	int		y;
 	int		ret;
 
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-	{
-		free_wireframe(w, 2);
-		return (0);
-	}
 	y = 0;
 	w->map = (t_point **)malloc(sizeof(t_point *) * w->y_len);
 	ret = 1;
@@ -103,6 +96,7 @@ int	parsing(char *file, t_wireframe *wireframe)
 {
 	char		*content;
 	int			ret;
+	int			fd;
 
 	init_wireframe(wireframe);
 	if (!(get_dimensions(file, wireframe)))
@@ -110,7 +104,13 @@ int	parsing(char *file, t_wireframe *wireframe)
 		free_wireframe(wireframe, 79);
 		return (0);
 	}
-	if (!read_file(file, wireframe))
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+	{
+		free_wireframe(wireframe, 2);
+		return (0);
+	}
+	if (!read_file(fd, wireframe))
 	{
 		free_wireframe(wireframe, 79);
 		return (0);
