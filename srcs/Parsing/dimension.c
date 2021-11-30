@@ -6,31 +6,37 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 13:33:02 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/30 16:59:16 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/11/30 19:31:37 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	count_absciss_len(t_wireframe *wireframe, char *line)
+int	count_absciss_len(t_wireframe *wireframe, char *line)
 {
 	int	i;
+	int	tmp;
 
 	i = 0;
-	if (!wireframe->x_len)
+	tmp = 0;
+	if (line && line[i])
 	{
 		while (line && line[i])
 		{
 			if (line && line[i] > 32 && line[i] < 127)
 			{
-				wireframe->x_len++;
+				tmp++;
 				while (line && line[i] > 32 && line[i] < 127)
 					i++;
 			}
 			if (line[i])
 				i++;
 		}
+		if (wireframe->x_len != 0 && tmp != wireframe->x_len)
+			return (0);
+		wireframe->x_len = tmp;
 	}
+	return (1);
 }
 
 int	count_ordinate_len(int fd, t_wireframe *wireframe)
@@ -47,7 +53,8 @@ int	count_ordinate_len(int fd, t_wireframe *wireframe)
 	}
 	if (line && line[0])
 		wireframe->y_len++;
-	count_absciss_len(wireframe, line);
+	if (!count_absciss_len(wireframe, line))
+		return (-1);
 	free(line);
 	return (ret);
 }
