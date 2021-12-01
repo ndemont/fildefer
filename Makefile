@@ -11,7 +11,6 @@ LFLAGS		= -L ${MLX_DIR} -lmlx -L ${LIBFT_DIR} -lft -framework OpenGL -framework 
 SRCS_DIR	= srcs
 INC_DIR		= includes
 MLX_DIR		= libmac
-LIBFT_DIR	= libft
 OBJS_DIR	= objs
 
 INC			= $(shell find ${INC_DIR} -type f -name "*.h")
@@ -21,7 +20,7 @@ vpath		%.c $(shell find ${SRCS_DIR} -type d)
 
 ifeq (${OS}, Linux)
 	MLX_DIR = liblinux
-	IFLAGS  = -I/usr/include -I${MLX_DIR} -I${INC_DIR} -I${LIBFT_DIR}/includes -D LINUX=1
+	IFLAGS  = -I/usr/include -I${MLX_DIR} -I${INC_DIR} -D LINUX=1
 	LFLAGS  = -L ${MLX_DIR} -lmlx -L ${LIBFT_DIR} -lft -L /usr/lib -lXext -lX11 -lm
 endif
 
@@ -29,7 +28,6 @@ all: 		init ${NAME}
 
 init:
 			$(shell mkdir -p ${OBJS_DIR})
-			${MAKE} --silent -C ${LIBFT_DIR}
 			${MAKE} --silent -C ${MLX_DIR}
 
 ${NAME}:	${OBJS}
@@ -42,13 +40,11 @@ ${OBJS_DIR}/%.o:	%.c
 
 clean:
 			${RM} ${OBJS_DIR}
-			${MAKE} clean --silent -C ${LIBFT_DIR}
 			${MAKE} clean --silent -C ${MLX_DIR}
 
 fclean:
 			${RM} ${OBJS_DIR}
 			${RM} ${NAME}
-			${MAKE} fclean --silent -C ${LIBFT_DIR}
 			${MAKE} clean --silent -C ${MLX_DIR}
 
 re:			fclean all
