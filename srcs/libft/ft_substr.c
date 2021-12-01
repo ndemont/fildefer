@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 19:28:52 by ndemont           #+#    #+#             */
-/*   Updated: 2020/11/21 02:00:59 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/12/01 09:29:38 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (!s)
 		return (0);
-	if (!(dup = malloc(sizeof(char) * (len + 1))))
+	dup = malloc(sizeof(char) * (len + 1));
+	if (!dup)
 		return (0);
 	i = 0;
 	size = ft_strlen(s);
