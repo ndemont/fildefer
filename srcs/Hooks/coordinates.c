@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 14:30:36 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/30 20:57:37 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/12/01 10:51:07 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	move_x(t_wireframe *w, int shift)
 		while (x < w->x_len)
 		{
 			w->map[y][x].x += shift;
-
 			x++;
 		}
 		y++;

@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 12:24:46 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/30 20:45:45 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/12/01 10:48:46 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ void	isometrict_perspective(t_wireframe *w, int *x, int y, char *line)
 {
 	w->map[y][*x].z = (float)ft_atoi(line);
 	w->map[y][*x].x = (float)(sqrtf(2.0) / 2.0) *((float)(*x) - (float)y);
-	w->map[y][*x].y = (float)(sqrtf(2.0) / 3.0) * (w->map[y][*x].z * 0.3) \
+	w->map[y][*x].y = (float)(sqrtf(2.0) / 3.0) *(w->map[y][*x].z * 0.3) \
 	- (((-1.0) / sqrtf(6.0)) * ((float)(*x) + (float)y));
-	//w->map[y][*x].z = (float)(sqrt(3.0) / 3) * ((float)(*x) + (float)y + w->map[y][*x].z);
 	update_limits(w, w->map[y][*x].x, w->map[y][*x].y, w->map[y][*x].z);
 	(*x)++;
 }

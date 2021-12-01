@@ -6,7 +6,7 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 14:26:01 by ndemont           #+#    #+#             */
-/*   Updated: 2021/11/30 15:17:55 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/12/01 10:51:46 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,6 @@ void	draw_pixel(t_wireframe *w, t_point p1, t_point pt, t_point p2)
 	pt.z = p1.z + (ratio * (p2.z - p1.z));
 	w->pixel.p = ((HEIGHT - ((int)pt.y)) * w->window.size);
 	w->pixel.p += ((WIDTH - ((int)pt.x)) * 4);
-	if (pt.x < (WIDTH -1) && pt.y < (HEIGHT - 1) && pt.x > 1 && pt.y > 1)
+	if (pt.x < (WIDTH - 1) && pt.y < (HEIGHT - 1) && pt.x > 1 && pt.y > 1)
 		color_pixel(w, pt);
 }

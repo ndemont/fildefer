@@ -6,13 +6,13 @@
 /*   By: ndemont <ndemont@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 20:29:12 by ndemont           #+#    #+#             */
-/*   Updated: 2020/11/22 14:04:05 by ndemont          ###   ########.fr       */
+/*   Updated: 2021/12/01 10:59:37 by ndemont          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		ft_line_found(char *tab)
+int	ft_line_found(char *tab)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ int		ft_line_found(char *tab)
 	return (-1);
 }
 
-int		ft_fill_line(char **tab, char **line, int var)
+int	ft_fill_line(char **tab, char **line, int var)
 {
 	char	*tmp;
 	int		size_tab;
@@ -45,13 +45,14 @@ int		ft_fill_line(char **tab, char **line, int var)
 	return (1);
 }
 
-int		ft_check_all(char **tab, char **line, int ret)
+int	ft_check_all(char **tab, char **line, int ret)
 {
 	int		var;
 
 	if (ret < 0)
 		return (-1);
-	if (*tab && (var = ft_line_found(*tab)) >= 0)
+	var = ft_line_found(*tab);
+	if (*tab && var >= 0)
 		return (ft_fill_line(tab, line, var));
 	else if (*tab)
 	{
@@ -64,7 +65,7 @@ int		ft_check_all(char **tab, char **line, int ret)
 	return (0);
 }
 
-int		get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	static char	*tab = 0;
 	char		buf[BUFFER_SIZE + 1];
@@ -73,13 +74,15 @@ int		get_next_line(int fd, char **line)
 
 	if (fd < 0 || !line || BUFFER_SIZE < 1)
 		return (-1);
-	while ((ret = read(fd, buf, BUFFER_SIZE)) > 0)
+	ret = read(fd, buf, BUFFER_SIZE);
+	while (ret > 0)
 	{
 		buf[ret] = '\0';
 		if (tab == 0)
 			tab = ft_strdup("");
 		tab = ft_strjoin(tab, buf);
-		if ((var = ft_line_found(tab)) >= 0)
+		var = ft_line_found(tab);
+		if (var >= 0)
 			return (ft_fill_line(&tab, line, var));
 	}
 	return (ft_check_all(&tab, line, ret));
